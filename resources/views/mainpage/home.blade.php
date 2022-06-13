@@ -11,41 +11,44 @@
     </div>
     <input class="form-control" id="input-text" type="text" placeholder="Search..">
     <br>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped" style="width:100%">
         <thead>
             <tr>
-                <th>Filme</th>
-                <th>Data</th>
-                <th>Horario</th>
-                <th>Sala</th>
+                <th style="width:50%;margin: auto;vertical-align: middle; text-align: center">Filme</th>
+                <th style="width:20%;margin: auto;vertical-align: middle; text-align: center">Data</th>
+                <th style="width:20%;margin: auto;vertical-align: middle; text-align: center">Horario</th>
+                <th style="width:10%;margin: auto;vertical-align: middle; text-align: center">Sala</th>
             </tr>
         </thead>
-        <tbody id="myTable">
-            @foreach($moviesShown as $val)
-            <tr>
-                @foreach($movies as $val2)
-                @if($val->movies_id == $val2->id)
-                <td>
-                    <img src="{{$val2->poster }}" style="border-radius: 5px; margin-bottom: 20px; width: 10%; ">
-                    {{ $val2->name}}
-                </td>
-                @endif
+            <tbody id="myTable" >
+                @foreach($moviesShown as $val)
+                <tr>
+                    @foreach($movies as $val2)
+                    @if($val->movies_id == $val2->id)
+                    <td style="width:50%">
+                        <a href="{{ route('movie-details', $val2->id)}}"><img src="{{$val2->poster }}" style="border-radius: 5px; margin-bottom: 20px; width: 20%; "></a>
+                        {{ $val2->name}}
+                    </td>
+                    @endif
+                    @endforeach
+                    <td style="width:20%;vertical-align: middle; text-align: center">{{ date('d-m-Y', strtotime($val->session_date)) }}</td>
+                    @foreach($sessions as $val2)
+                    @if($val->sessions_id == $val2->id)
+                    <td style="width:20%;vertical-align: middle; text-align: center">{{$val2->session_hour}}</td>
+                    @endif
+                    @endforeach
+                    @foreach($rooms as $val2)
+                    @if($val->rooms_id == $val2->id)
+                    <td style="width:10%;vertical-align: middle; text-align: center">{{$val2->name}}</td>
+                    @endif
+                    @endforeach
+                </tr>
+                
                 @endforeach
-                <td>{{$val->session_date}}</td>
-                @foreach($sessions as $val2)
-                @if($val->sessions_id == $val2->id)
-                <td>{{$val2->session_hour}}</td>
-                @endif
-                @endforeach
-                @foreach($rooms as $val2)
-                @if($val->rooms_id == $val2->id)
-                <td>{{$val2->name}}</td>
-                @endif
-                @endforeach
-            </tr>
-            @endforeach
-        </tbody>
+                
+            </tbody>
     </table>
+
 
 </div>
 
@@ -70,7 +73,7 @@
         });
     });
 
-var today = new Date().toISOString().split('T')[0];
-document.getElementsByName("session_date")[0].setAttribute('min', today);
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementsByName("session_date")[0].setAttribute('min', today);
 </script>
 @endsection
