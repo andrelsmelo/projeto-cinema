@@ -30,11 +30,6 @@
                 <td style="width:50%">
                     <a href="{{ route('movie-details', $val2->id)}}"><img src="{{$val2->poster }}" style="border-radius: 5px; margin-bottom: 20px; width: 20%; "></a>
                         <p style="display: inline;">{{ $val2->name}}</p>
-                            @foreach($pegis as $val3)
-                            @if($val2->pegi_id == $val3->id)
-                            <p style="display: inline; vertical-align: middle; float:right"><strong>{{ $val3->name}}</strong></p>
-                            @endif
-                            @endforeach
                     <p hidden>{{$val2->tags}}</p>
                     @foreach($genres as $val3)
                     @if($val2->genre_id == $val3->id)
@@ -85,7 +80,5 @@
         });
     });
 
-    var today = new Date().toISOString().split('T')[0];
-    document.getElementsByName("session_date")[0].setAttribute('min', today);
 </script>
 @endsection
