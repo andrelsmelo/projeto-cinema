@@ -60,6 +60,11 @@
     <div class="container" style="width: 100vw; height: 100vh;">
         @yield('conteudo')
     </div>
+    <script>
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementsByName("session_date")[0].setAttribute('min', today);
+    document.getElementsByName("session_date")[0].setAttribute('value', today);
+</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 

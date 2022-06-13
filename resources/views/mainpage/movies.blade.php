@@ -5,7 +5,6 @@
 @section('conteudo')
 <div style="text-align: center">
   <h1>Filmes em cartaz</h1>
-  <p>Bem vindo! Está é a tela que mostra todos os filmes em cartaz</p>
   <div class="container">
     <input class="form-control" id="myInput" type="text" placeholder="Search..">
   </div>

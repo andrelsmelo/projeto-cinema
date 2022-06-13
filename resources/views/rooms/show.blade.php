@@ -3,7 +3,9 @@
 @section('titulo', 'Salas')
 
 @section('conteudo')
-<p>Está é a tela que mostra todos os filmes</p>
+<div style="text-align: center">
+    <h1>Está é a tela de Gerenciamento de Salas</h1>
+</div>
 @csrf
 <td>
     <a href="{{route('create-room')}}"><button type="button" class="btn btn-success">Nova Sala</button></a>

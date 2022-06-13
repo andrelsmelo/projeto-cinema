@@ -3,7 +3,9 @@
 @section('titulo', 'Filmes')
 
 @section('conteudo')
-<p>Está é a tela que mostra todos os filmes</p>
+<div style="text-align: center">
+    <h1>Está é a tela de Gerenciamento de filmes</h1>
+</div>
 @csrf
 <td>
    <a href="{{route('create-movie')}}"><button type="button" class="btn btn-success">Novo Filme</button></a>

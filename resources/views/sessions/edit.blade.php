@@ -3,8 +3,6 @@
 @section('titulo', 'Editar Sessão')
 
 @section('conteudo')
-<p>Está é a tela de edição da sessão {{$moviesShown->id}}</strong></p>
-
 <form action="{{ route('update-session',$moviesShown->id) }}" method="POST">
     @method('PUT')
     @csrf

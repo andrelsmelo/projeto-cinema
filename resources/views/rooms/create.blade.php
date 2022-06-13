@@ -3,7 +3,9 @@
 @section('titulo', 'Inserir Sala')
 
 @section('conteudo')
-<p>Está é a tela de inserção de novo filme</strong></p>
+<div style="text-align: center">
+    <h1>Está é a tela de inserção de Nova Sala</h1>
+</div>
 
 <form action="{{ route('store-room') }}" method="POST">
     @csrf

@@ -3,8 +3,9 @@
 @section('titulo', 'Inserir um filme')
 
 @section('conteudo')
-<p>Está é a tela de inserção de novo filme</strong></p>
-
+<div style="text-align: center">
+    <h1>Está é a tela de inserção de novo filme</h1>
+</div>
 <form action="{{ route('store-movie') }}" method="POST">
     @csrf
     <div class="mb-3">
