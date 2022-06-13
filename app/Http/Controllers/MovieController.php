@@ -63,7 +63,7 @@ class MovieController extends Controller
             'release' => $request->release,
             'genre_id' => $request->genre_id,
             'sinopse' => $request->sinopse,
-
+            'tags' => $request->tags
         ]);
 
         return redirect('/filmes');
@@ -109,7 +109,7 @@ class MovieController extends Controller
             'release' => $request->release,
             'genre_id' => $request->genre_id,
             'sinopse' => $request->sinopse,
-
+            'tags' => $request->tags
         ]);
 
         return redirect('/filmes');

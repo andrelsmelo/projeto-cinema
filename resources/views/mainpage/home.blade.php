@@ -3,13 +3,15 @@
 @section('titulo', 'Página Inicial')
 
 @section('conteudo')
-<p>Bem vindo! Esses são os filmes das proximas sessões</p>
+<div style="text-align: center">
+    <h1>Esses são os filmes das proximas sessões</h1>
+</div>
 <div class="container">
     <div class="mb-3">
         <label for="session_date" class="form-label">Data</label>
         <input type="date" class="form-control" id="input-date" name="session_date" placeholder="Digite a data da Sessão" required>
     </div>
-    <input class="form-control" id="input-text" type="text" placeholder="Search..">
+    <input class="form-control" id="input-text" type="text" placeholder="Buscar">
     <br>
     <table class="table table-bordered table-striped" style="width:100%">
         <thead>
@@ -28,6 +30,13 @@
                     <td style="width:50%">
                         <a href="{{ route('movie-details', $val2->id)}}"><img src="{{$val2->poster }}" style="border-radius: 5px; margin-bottom: 20px; width: 20%; "></a>
                         {{ $val2->name}}
+                        <p hidden>{{$val2->tags}}</p>
+                        @foreach($genres as $val3)
+                        @if($val2->genre_id == $val3->id)
+                        <p hidden>{{$val3->name}}</p>
+                        @endif
+                        @endforeach
+                        
                     </td>
                     @endif
                     @endforeach

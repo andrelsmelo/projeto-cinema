@@ -43,6 +43,10 @@
         </select>
     </div>
     <div class="mb-3">
+        <label for="tags" class="form-label">Coloque as tags abaixo</label>
+        <textarea class="form-control" id="tags" name="tags" placeholder="Adicione tags customizadas para facilitar a busca" required></textarea>
+    </div>
+    <div class="mb-3">
         <label for="sinopse" class="form-label">Coloque a sinopse abaixo</label>
         <textarea class="form-control" id="sinopse" name="sinopse" placeholder="Cole a sinopse do filme aqui" required></textarea>
     </div>

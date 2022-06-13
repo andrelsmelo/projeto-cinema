@@ -24,6 +24,7 @@ class CreateMoviesTable extends Migration
             $table->unsignedBigInteger('genre_id')->nullable($value = true);
             $table->foreign('genre_id')->references('id')->on('genres');
             $table->text('sinopse');
+            $table->string('tags');
             $table->timestamps();
         });
     }

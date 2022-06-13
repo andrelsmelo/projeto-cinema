@@ -51,6 +51,10 @@
         @endforeach
     </div>
     <div class="mb-3">
+        <label for="release" class="form-label">Ano de lançamento</label>
+        <input type="text" value="{{ $movie->tags }}" class="form-control" id="tags" name="tags" placeholder="Digite Tags para facilitar a busca" required>
+    </div>
+    <div class="mb-3">
         <label for="sinopse" class="form-label">Coloque a sinopse abaixo</label>
         <textarea value="{{ $movie->sinopse }}" class="form-control" id="sinopse" name="sinopse" placeholder="Cole a sinopse aqui" required>{{$movie->sinopse}}</textarea>
     </div>
