@@ -33,12 +33,7 @@ A seguir instale as dependencias
 
 ```bash
   composer install
-```
-
-```bash
   npm install
-```
-```bash
   npm run dev
 ```
 
@@ -66,5 +61,5 @@ E por fim rode o servidor
   php artisan serve
 ```
 Por padrão foi inserido um usuario de admin
-- login admin@admin.com
-- senha "123123123"
+- login: admin@admin.com
+- senha: "123123123"
