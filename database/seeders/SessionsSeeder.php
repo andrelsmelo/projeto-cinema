@@ -16,17 +16,11 @@ class SessionsSeeder extends Seeder
     {
         DB::table('sessions')->insert([
             ['session_hour' => '10:00:00'],
-            ['session_hour' => '11:00:00'],
-            ['session_hour' => '12:00:00'],
-            ['session_hour' => '13:00:00'],
-            ['session_hour' => '14:00:00'],
-            ['session_hour' => '15:00:00'],
-            ['session_hour' => '16:00:00'],
-            ['session_hour' => '17:00:00'],
-            ['session_hour' => '18:00:00'],
-            ['session_hour' => '19:00:00'],
-            ['session_hour' => '20:00:00'],
-            ['session_hour' => '21:00:00'],
+            ['session_hour' => '12:10:00'],
+            ['session_hour' => '14:20:00'],
+            ['session_hour' => '16:30:00'],
+            ['session_hour' => '18:40:00'],
+            ['session_hour' => '20:50:00'],
         ]);
     }
 }

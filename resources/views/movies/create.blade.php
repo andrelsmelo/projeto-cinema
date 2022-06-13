@@ -43,7 +43,7 @@
     </div>
     <div class="mb-3">
         <label for="sinopse" class="form-label">Coloque a sinopse abaixo</label>
-        <textarea class="form-control" id="sinopse" name="sinopse" placeholder="Cole a sinopse aqui" required>Coloque aqui a sinopse do filme</textarea>
+        <textarea class="form-control" id="sinopse" name="sinopse" placeholder="Cole a sinopse do filme aqui" required></textarea>
     </div>
 
     <button class="btn btn-success" type="submit">Enviar</button>

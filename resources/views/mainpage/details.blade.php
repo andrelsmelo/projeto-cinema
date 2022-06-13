@@ -4,7 +4,7 @@
 
 @section('conteudo')
 <div class="container" style="margin-top: 35px">
-<h1>{{$movie->name}}</h1>
+    <h1>{{$movie->name}}</h1>
     <div class="row">
         <div class="col-3">
             <div>
@@ -14,7 +14,7 @@
         <div class="col-3">
             <div>
                 <div class="details" style="height: 90px; line-height: 90px;">
-                    <ul >
+                    <ul>
                         <li>
                             <div>
                                 <strong>Gênero: </strong>
@@ -39,6 +39,32 @@
                                 {{ $movie->release}}
                             </div>
                         </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div>
+                <div class="details" style="height: 30px; line-height: 30px;">
+                    <ul>
+                        <h4>Proximas sessões</h4>
+                        @foreach($moviesShown as $val)
+                        <li>
+                            <div>
+                                {{$val->session_date}},
+                                @foreach($sessions as $val2)
+                                @if($val->sessions_id == $val2->id)
+                                {{$val2->session_hour}},
+                                @endif
+                                @endforeach
+                                @foreach($rooms as $val2)
+                                @if($val->rooms_id == $val2->id)
+                                {{$val2->name}}
+                                @endif
+                                @endforeach
+                            </div>
+                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

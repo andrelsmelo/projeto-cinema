@@ -10,34 +10,12 @@ use App\Models\Rooms;
 use App\Models\Sessions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Gate ;
+use Illuminate\Support\Facades\Gate;
 
 class SessionController extends Controller
 {
     /**
-     * Mostra todas as sessões
-     *
-     * @return void
-     */
-    public function show()
-    {
-        Gate::authorize('access-admin');
-
-        $moviesShown = MoviesShown::get();
-        $movies = Movies::get();
-        $rooms = Rooms::get();
-        $sessions = Sessions::get();
-
-        return view('sessions.show',[
-            'moviesShown' => $moviesShown,
-            'movies' => $movies,
-            'rooms' => $rooms,
-            'sessions' => $sessions
-        ]);
-    }
-
-    /**
-     * Tela de criação de Sessão
+     * Tela de visualização e criação de Sessões
      *
      * @return void
      */
@@ -48,12 +26,15 @@ class SessionController extends Controller
         $movies = Movies::get();
         $sessions = Sessions::get();
         $rooms = Rooms::get();
+        $moviesShown = MoviesShown::get();
 
-        return view('sessions.create',[
+
+        return view('sessions.create', [
             'movies' => $movies,
             'rooms' => $rooms,
-            'sessions' => $sessions
-        ]);   
+            'sessions' => $sessions,
+            'moviesShown' => $moviesShown
+        ]);
     }
     /**
      * Salva a Sessão Nova no Banco de Dados
@@ -67,10 +48,27 @@ class SessionController extends Controller
 
         $data = $request->except('_token');
         $duration = Movies::find($data['movies_id'])->only('duration');
-        $newdata = Arr::add($data, 'movie_duration', Arr::get($duration,'duration'));
-        MoviesShown::create($newdata);
+        $newSession = Arr::add($data, 'movie_duration', Arr::get($duration, 'duration'));
 
-        return redirect('/sessoes'); 
+        $moviesShown = MoviesShown::get();
+
+        $sessions = $moviesShown->map(function ($moviesShown) {
+            return collect($moviesShown->toArray())
+                ->only(['session_date', 'rooms_id', 'sessions_id'])
+                ->all();
+        });
+
+        foreach ($sessions as $key => $value) {
+            if ($value['session_date'] == $newSession['session_date']) {
+                if ($value['rooms_id'] == $newSession['rooms_id'] && $value['sessions_id'] == $newSession['sessions_id']) {
+                    abort(401);
+                }
+            }
+        }
+
+        MoviesShown::create($newSession);
+
+        return redirect('/sessoes');
     }
     /**
      * Tela de edição de Sessão
@@ -87,12 +85,12 @@ class SessionController extends Controller
         $sessions = Sessions::get();
         $movies = Movies::get();
 
-        return view('sessions.edit',[
+        return view('sessions.edit', [
             'moviesShown' => $moviesShown,
             'rooms' => $rooms,
             'sessions' => $sessions,
             'movies' => $movies
-        ]);  
+        ]);
     }
     /**
      * Atualiza uma Sessão no Banco de Dados
@@ -108,7 +106,7 @@ class SessionController extends Controller
         $data = $request->except('_token');
         $moviesShown = MoviesShown::find($id);
         $duration = Movies::find($data['movies_id'])->only('duration');
-        $newdata = Arr::add($data, 'movie_duration', Arr::get($duration,'duration'));
+        $newdata = Arr::add($data, 'movie_duration', Arr::get($duration, 'duration'));
 
         $moviesShown->update($newdata);
 
@@ -123,13 +121,11 @@ class SessionController extends Controller
     public function delete(int $id)
     {
         Gate::authorize('access-admin');
-        
+
         $moviesShown = MoviesShown::find($id);
 
         $moviesShown->delete();
 
-        return redirect('/sessoes'); 
+        return redirect('/sessoes');
     }
-
-
 }

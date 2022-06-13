@@ -2,8 +2,8 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
+            <img src="https://imagensemoldes.com.br/wp-content/uploads/2020/06/Imagem-Elementos-Cinema-PNG.png" class="w-20 h-20 fill-current text-gray-500" style="width: 20rem; height:20rem"/>
+           </a>
         </x-slot>
 
         <!-- Validation Errors -->

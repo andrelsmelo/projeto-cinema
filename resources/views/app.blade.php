@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('titulo')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -23,7 +24,7 @@
                     </li>
                     @can('access-admin')
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ route('view-sessions') }}">Editar Programação</a>
+                        <a class="nav-link active" aria-current="page" href="{{ route('create-session') }}">Editar Programação</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{ route('view-movies')}}">Edição de Filmes</a>

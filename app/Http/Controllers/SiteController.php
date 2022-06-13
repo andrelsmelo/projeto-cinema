@@ -42,13 +42,19 @@ class SiteController extends Controller
 
     public function movieDetails($id)
     {
+        $moviesShown = MoviesShown::where('movies_id', $id)->get();
+        $sessions = Sessions::get();
+        $rooms = Rooms::get();
         $movie = Movies::find($id);
         $genre = Genre::find($movie->genre_id);
         $pegi = Pegi::find($movie->pegi_id);
         return view('mainpage.details',[
             'movie' => $movie,
             'genre' => $genre,
-            'pegi' => $pegi
+            'pegi' => $pegi,
+            'moviesShown' => $moviesShown,
+            'sessions' => $sessions,
+            'rooms' => $rooms
         ]);
     }
 

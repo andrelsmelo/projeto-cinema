@@ -34,9 +34,8 @@ Route::get('/genres/{genre_id}',[SiteController::class, 'moviesPerGenre'])->name
 
 //Rotas CRUD de Sessões
 
-Route::get('/sessoes',[SessionController::class, 'show'])->name('view-sessions');
-Route::get('/sessoes/create',[SessionController::class, 'create'])->name('create-session');
-Route::post('/sessoes/create',[SessionController::class, 'store'])->name('store-session');
+Route::get('/sessoes',[SessionController::class, 'create'])->name('create-session');
+Route::post('/sessoes',[SessionController::class, 'store'])->name('store-session');
 Route::get('/sessoes/{id}/edit',[SessionController::class, 'edit'])->name('edit-session');
 Route::put('/sessoes/{id}',[SessionController::class, 'update'])->name('update-session');
 Route::delete('/sessoes/{id}',[SessionController::class, 'delete'])->name('delete-session');
