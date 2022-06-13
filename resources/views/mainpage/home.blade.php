@@ -9,7 +9,7 @@
 <div class="container">
     <div class="mb-3">
         <label for="session_date" class="form-label">Data</label>
-        <input type="date" class="form-control" id="input-date" name="session_date" placeholder="Digite a data da Sessão" required>
+        <input type="date" class="form-control" id="input-date" name="input-date" placeholder="Digite a data da Sessão" required>
     </div>
     <input class="form-control" id="input-text" type="text" placeholder="Buscar">
     <br>
@@ -41,6 +41,7 @@
                     <p hidden>{{$val3->name}}</p>
                     @endif
                     @endforeach
+                    <p hidden>{{$val->session_date}}</p>
                 </td>
                 @endif
                 @endforeach

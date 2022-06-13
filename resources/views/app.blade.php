@@ -62,9 +62,13 @@
         @yield('conteudo')
     </div>
     <script>
-    var today = new Date().toISOString().split('T')[0];
-    document.getElementsByName("session_date")[0].setAttribute('min', today);
-    document.getElementsByName("session_date")[0].setAttribute('value', today);
+    var today = new Date();
+    var min = new Date().toISOString().split('T')[0];
+    var maxDate = new Date(today.getTime() + 15 * 24 * 60 * 60 * 1000);
+    var max = maxDate.toISOString().split('T')[0];
+    document.getElementsByName("input-date")[0].setAttribute('min', min);
+    document.getElementsByName("input-date")[0].setAttribute('value', min);
+    document.getElementsByName("input-date")[0].setAttribute('max', max);
 </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
