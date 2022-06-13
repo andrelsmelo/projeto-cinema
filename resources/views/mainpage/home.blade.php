@@ -36,7 +36,6 @@
                         <p hidden>{{$val3->name}}</p>
                         @endif
                         @endforeach
-                        
                     </td>
                     @endif
                     @endforeach
@@ -65,7 +64,6 @@
     $(document).ready(function() {
         $("#input-date").on("change", function() {
             var value = $(this).val().toLowerCase();
-            console.log(value)
             $("#myTable tr").filter(function() {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
@@ -75,7 +73,6 @@
     $(document).ready(function() {
         $("#input-text").on("keyup", function() {
             var value = $(this).val().toLowerCase();
-            console.log(value)
             $("#myTable tr").filter(function() {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });

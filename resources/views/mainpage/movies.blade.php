@@ -5,11 +5,11 @@
 @section('conteudo')
 <div style="text-align: center">
   <h1>Filmes em cartaz</h1>
+  <br>
   <div class="container">
-    <input class="form-control" id="myInput" type="text" placeholder="Search..">
-  </div>
-
-
+    <input class="form-control" id="input-text" type="text" placeholder="Buscar">
+    <br>
+</div>
   <div>
     <div style=" float: left">
       <h6><small>Filtre os filmes por genero</small></h6>
@@ -19,20 +19,31 @@
         @endforeach
       </ul>
     </div>
-
-    <div>
-
-      <div class="container" style="margin-top: 25px">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-          @foreach($movies as $val)
-          <div class="container mx-auto px-6 py-16 flex">
-            <div>
-              <a href="{{ route('movie-details', $val->id)}}"><img src="{{ $val->poster }}" style="border-radius: 5px; margin-bottom: 20px; width: 60%"></a>
-            </div>
-          </div>
-          @endforeach
+    <div class="container" id="myGrid">
+    <div class="row">
+        @foreach($movies as $val)
+        <div class="col-sm-3" >
+            <a href="{{ route('movie-details', $val->id)}}"><img src="{{$val->poster }}" style="border-radius: 5px; margin-bottom: 20px; width: 60%; "></a>
+                        <p hidden>{{$val->tags}}</p>
+                        @foreach($genres as $val2)
+                        @if($val->genre_id == $val2->id)
+                        <p hidden>{{$val->name}}</p>
+                        @endif
+                        @endforeach
         </div>
-      </div>
+        @endforeach
     </div>
+</div>
+
   </div>
+  <script>
+    $(document).ready(function() {
+        $("#input-text").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myGrid div").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
   @endsection

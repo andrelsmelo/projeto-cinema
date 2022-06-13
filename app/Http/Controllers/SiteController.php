@@ -30,6 +30,7 @@ class SiteController extends Controller
             'sessions' => $sessions
         ]);
     }
+
     public function showingMovies()
     {
         $movies = Movies::get();
