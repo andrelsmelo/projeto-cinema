@@ -1,16 +1,17 @@
 <!doctype html>
 <html lang="en">
 
-<head>
+<head style="background-color: #212529; color: white;">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('titulo')</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg bg-light">
+<body style="background-color: #212529; color: white;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ route('index') }}">CINEMA</a>

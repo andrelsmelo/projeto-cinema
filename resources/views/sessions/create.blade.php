@@ -44,8 +44,8 @@
     <button class="btn btn-success" type="submit">Enviar</button>
 </form>
 
-<table class="table">
-    <thead>
+<table class="table table-dark table-striped" style="width:100%">
+    <thead class="thead-dark" style="vertical-align: middle; text-align: center">
         <tr>
             <th scope="col">#</th>
             <th scope="col">Data</th>
@@ -56,7 +56,7 @@
             <th scope="col">Ações</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody style="vertical-align: middle; text-align: center">
         @foreach($moviesShown as $val)
         <tr>
             <th scope="row">{{ $val->id }}</th>
