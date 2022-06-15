@@ -16,45 +16,38 @@
                     {{$genre->name}}
                 </li>
                 <li>
-
                     <strong>Classificação: </strong>
                     {{$pegi->name}}
-
                 </li>
                 <li>
-
                     <strong>Duração: </strong>
                     {{ $movie->duration}}
-
                 </li>
                 <li>
-
                     <strong>Ano de lançamento: </strong>
                     {{ $movie->release}}
-
                 </li>
             </ul>
         </div>
         <div class="details-column-sessions">
             <ul>
                 @foreach($moviesShown as $val)
-                            @if($val->movies_id == $movie->id && $val->session_date < date('Y-m-d')) <h6>Ultimas Sessões</h6>
-                                <li>
-                                    {{$val->session_date}},
-                                        @foreach($sessions as $val2)
-                                            @if($val->sessions_id == $val2->id)
-                                                {{$val2->session_hour}},
-                                            @endif
-                                        @endforeach
-                                        @foreach($rooms as $val2)
-                                            @if($val->rooms_id == $val2->id)
-                                                {{$val2->name}}
-                                            @endif
-                                        @endforeach
-                                </li>
-                            @endif
-                @endforeach
-
+                @if($val->movies_id == $movie->id && $val->session_date < date('Y-m-d')) <h6>Ultimas Sessões</h6>
+                    <li>
+                        {{$val->session_date}},
+                        @foreach($sessions as $val2)
+                        @if($val->sessions_id == $val2->id)
+                        {{$val2->session_hour}},
+                        @endif
+                        @endforeach
+                        @foreach($rooms as $val2)
+                        @if($val->rooms_id == $val2->id)
+                        {{$val2->name}}
+                        @endif
+                        @endforeach
+                    </li>
+                    @endif
+                    @endforeach
                     @foreach($moviesShown as $val)
                     @if($moviesShown->movies_id = $movie->id && $val->session_date >= date('Y-m-d'))
                     <h6>Proximas Sessões</h6>
@@ -78,9 +71,9 @@
     </div>
 </div>
 <div class="row">
-        <div class="details-bottom">
-            <h3>Sinopse</h3>
-            <p>{{ $movie->sinopse }}</p>
-        </div>
+    <div class="details-bottom">
+        <h3>Sinopse</h3>
+        <p>{{ $movie->sinopse }}</p>
     </div>
+</div>
 @endsection

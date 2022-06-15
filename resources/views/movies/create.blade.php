@@ -6,6 +6,15 @@
 <div style="text-align: center">
     <h1>Está é a tela de inserção de novo filme</h1>
 </div>
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 <form action="{{ route('store-movie') }}" method="POST">
     @csrf
     <div class="mb-3">
@@ -26,9 +35,9 @@
     </div>
     <div class="mb-3">
         <label for="pegi_id" class="form-label">Classificação de Idade</label>
-        <select name="pegi_id"class="form-select form-select-sm" aria-label=".form-select-sm example">
-        <option selected value="">Selecione a Classificação de idade</option>
-        @foreach ($pegis as $val)
+        <select name="pegi_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
+            <option selected value="">Selecione a Classificação de idade</option>
+            @foreach ($pegis as $val)
             <option value="{{ $val->id }}">{{ $val->name }}</option>
             @endforeach
         </select>
@@ -36,8 +45,8 @@
     <div class="mb-3">
         <label for="genre_id" class="form-label">Genêro</label>
         <select name="genre_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
-        <option selected value="">Selecione um Genero</option>
-        @foreach ($genres as $val)
+            <option selected value="">Selecione um Genero</option>
+            @foreach ($genres as $val)
             <option value="{{ $val->id }}">{{ $val->name }}</option>
             @endforeach
         </select>
@@ -50,7 +59,6 @@
         <label for="sinopse" class="form-label">Coloque a sinopse abaixo</label>
         <textarea class="form-control" id="sinopse" name="sinopse" placeholder="Cole a sinopse do filme aqui" required></textarea>
     </div>
-
     <button class="btn btn-success" type="submit">Enviar</button>
 </form>
 

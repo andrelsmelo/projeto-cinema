@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
+    /**
+     * Exibe a tela principal com os Filmes em exibição
+     *
+     * @return void
+     */
     public function index()
     {
         $moviesShown = MoviesShown::get();
@@ -30,7 +35,11 @@ class SiteController extends Controller
             'sessions' => $sessions
         ]);
     }
-
+    /**
+     * Exibe tela de todos os filmes disponiveis no cinema com lsita lateral de gêneros
+     *
+     * @return void
+     */
     public function showingMovies()
     {
         $movies = Movies::get();
@@ -40,7 +49,27 @@ class SiteController extends Controller
             'genres' => $genres
         ]);
     }
-
+    /**
+     * Exibe filmes de um gênero especifico
+     *
+     * @param [type] $genre_id
+     * @return void
+     */
+    public function moviesPerGenre($genre_id)
+    {
+        $genre = Genre::find($genre_id);
+        $moviesPerGenre = Movies::select('*')->where('genre_id', $genre_id)->get();
+        return view('mainpage.movies-per-genre',[
+            'genre' => $genre,
+            'moviesPerGenre' => $moviesPerGenre
+        ]);
+    }
+    /**
+     * Mostra os detalhes dos filmes e suas sessões(Anteriores e Próximas)
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function movieDetails($id)
     {
         $moviesShown = MoviesShown::where('movies_id', $id)->get();
@@ -56,16 +85,6 @@ class SiteController extends Controller
             'moviesShown' => $moviesShown,
             'sessions' => $sessions,
             'rooms' => $rooms
-        ]);
-    }
-
-    public function moviesPerGenre($genre_id)
-    {
-        $genre = Genre::find($genre_id);
-        $moviesPerGenre = Movies::select('*')->where('genre_id', $genre_id)->get();
-        return view('mainpage.movies-per-genre',[
-            'genre' => $genre,
-            'moviesPerGenre' => $moviesPerGenre
         ]);
     }
 }

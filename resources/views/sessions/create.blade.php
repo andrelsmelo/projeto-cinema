@@ -6,7 +6,15 @@
 <div>
     <h1>Está é a tela de Gerenciamento de Sessões</h1>
 </div>
-
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 <form action="{{ route('create-session') }}" class="form-sessions" method="POST">
     @csrf
     <div class="col-sm-3 my-3">
@@ -15,7 +23,7 @@
     </div>
     <div class="col-sm-3 my-3">
         <label for="rooms_id" class="form-label">Sala</label>
-        <select name="rooms_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
+        <select name="rooms_id" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
             <option selected value="">Selecione uma Sala</option>
             @foreach ($rooms as $val)
             <option value="{{ $val->id }}">{{ $val->name }}</option>
@@ -24,7 +32,7 @@
     </div>
     <div class="col-sm-3 my-3">
         <label for="sessions_id" class="form-label">Horario</label>
-        <select name="sessions_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
+        <select name="sessions_id" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
             <option selected value="">Selecione um Horario</option>
             @foreach ($sessions as $val)
             <option value="{{ $val->id }}">{{ $val->session_hour }}</option>
@@ -33,12 +41,11 @@
     </div>
     <div class="col-sm-4 my-3">
         <label for="movies_id" class="form-label">Filme</label>
-        <select name="movies_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
+        <select name="movies_id" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
             <option selected value="">Selecione um Filme</option>
             @foreach ($movies as $val)
             <option value="{{ $val->id }}">{{ $val->name }}</option>
             @endforeach
-
         </select>
     </div>
     <div class="create-button">
@@ -91,7 +98,6 @@
         @endforeach
     </tbody>
 </table>
-
 <script>
     var today = new Date().toISOString().split('T')[0];
     document.getElementsByName("session_date")[0].setAttribute('min', today);

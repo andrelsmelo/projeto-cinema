@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Rooms;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Redirect;
 
 class RoomController extends Controller
 {
@@ -44,6 +45,11 @@ class RoomController extends Controller
     {
         Gate::authorize('access-admin');
 
+        $request->validate([
+            'name' => ['required', 'unique:rooms', 'max: 255'],
+            'capacity' => ['required']
+        ]);
+
         Rooms::create($request->except('_token'));
 
         return redirect('/salas'); 
@@ -75,7 +81,7 @@ class RoomController extends Controller
     {
         Gate::authorize('access-admin');
 
-        $room = Rooms::find($id);
+        $room = Rooms::findOrFail($id);
 
         $room->update($request->except('_token'));
 

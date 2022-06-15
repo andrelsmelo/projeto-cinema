@@ -46,6 +46,13 @@ class SessionController extends Controller
     {
         Gate::authorize('access-admin');
 
+        $request->validate([
+            "session_date" => ['required'],
+            "rooms_id" => ['required','exists:rooms,id'],
+            "sessions_id" => ['required','exists:sessions,id'],
+            "movies_id" => ['required','exists:movies,id']
+        ]);
+
         $data = $request->except('_token');
         $duration = Movies::find($data['movies_id'])->only('duration');
         $newSession = Arr::add($data, 'movie_duration', Arr::get($duration, 'duration'));
@@ -102,6 +109,12 @@ class SessionController extends Controller
     public function update(int $id, Request $request)
     {
         Gate::authorize('access-admin');
+        $request->validate([
+            "session_date" => [],
+            "rooms_id" => ['exists:rooms,id'],
+            "sessions_id" => ['exists:sessions,id'],
+            "movies_id" => ['exists:movies,id']
+        ]);
 
         $data = $request->except('_token');
         $moviesShown = MoviesShown::find($id);

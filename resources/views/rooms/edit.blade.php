@@ -4,7 +4,15 @@
 
 @section('conteudo')
 <h1>Está é a tela de edição da {{ $room->name }}</strong></h1>
-
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 <form action="{{ route('update-room',$room->id) }}" class="form-sessions" method="POST">
     @method('PUT')
     @csrf
@@ -20,5 +28,4 @@
         <button class="btn btn-success" type="submit">Enviar</button>
     </div>
 </form>
-
 @endsection

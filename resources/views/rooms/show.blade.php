@@ -33,7 +33,6 @@
                     @csrf
                     <button class="btn btn-danger" type="submit" onclick="return confirm('Tem certeza?')">Deletar</button>
                 </form>
-
             </td>
         </tr>
         @endforeach

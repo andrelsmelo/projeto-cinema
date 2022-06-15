@@ -55,6 +55,17 @@ class MovieController extends Controller
     {
         Gate::authorize('access-admin');
 
+        $request->validate([
+            'name' => ['required', 'unique:movies', 'max: 255'],
+            'duration' => ['required','max: 255'],
+            'pegi_id' => ['required', 'exists:pegis,id'],
+            'poster' => ['required','max: 255'],
+            'release' => ['required', 'max: 4'],
+            'genre_id' => ['required', 'exists:genres,id'],
+            'sinopse' => ['required', 'max: 255'],
+            'tags' => ['required','max: 255']
+        ]);
+
         Movies::create([
             'name' => $request->name,
             'duration' => $request->duration,
@@ -98,6 +109,17 @@ class MovieController extends Controller
     public function update(int $id, Request $request)
     {
         Gate::authorize('access-admin');
+        
+        $request->validate([
+            'name' => ['required', 'max: 255'],
+            'duration' => ['required','max: 255'],
+            'pegi_id' => ['required', 'exists:pegis,id'],
+            'poster' => ['required','max: 255'],
+            'release' => ['required', 'max: 4'],
+            'genre_id' => ['required', 'exists:genres,id'],
+            'sinopse' => ['required', 'max: 255'],
+            'tags' => ['required','max: 255']
+        ]);
 
         $movie = Movies::find($id);
 
@@ -124,7 +146,7 @@ class MovieController extends Controller
     {
         Gate::authorize('access-admin');
         
-        $movie = Movies::find($id);
+        $movie = Movies::findOrFail($id);
 
         $movie->delete();
 

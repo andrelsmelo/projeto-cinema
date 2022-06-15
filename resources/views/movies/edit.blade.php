@@ -4,7 +4,15 @@
 
 @section('conteudo')
 <p>Está é a tela de edição do filme <strong>{{$movie->name}}</strong></p>
-
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 <form action="{{ route('update-movie', $movie->id) }}" method="POST">
     @csrf
     @method('PUT')
@@ -28,7 +36,7 @@
         <label for="pegi_id" class="form-label">Classificação de Idade</label>
         @foreach($pegi as $val)
         @if($val->id == $movie->pegi_id)
-        <select  name="pegi_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
+        <select name="pegi_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
             <option selected value="{{$val->id}}">{{$val->name}}</option>
             @foreach ($pegi as $val)
             <option value="{{ $val->id }}">{{ $val->name }}</option>
@@ -58,7 +66,6 @@
         <label for="sinopse" class="form-label">Coloque a sinopse abaixo</label>
         <textarea value="{{ $movie->sinopse }}" class="form-control" id="sinopse" name="sinopse" placeholder="Cole a sinopse aqui" required>{{$movie->sinopse}}</textarea>
     </div>
-
     <button class="btn btn-success" type="submit">Enviar</button>
 </form>
 

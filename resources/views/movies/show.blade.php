@@ -8,7 +8,7 @@
 </div>
 @csrf
 <td>
-   <a href="{{route('create-movie')}}"><button type="button" class="btn btn-success">Novo Filme</button></a>
+    <a href="{{route('create-movie')}}"><button type="button" class="btn btn-success">Novo Filme</button></a>
 </td>
 <table class="table table-dark table-striped" style="width:100%">
     <thead class="thead-dark" style="vertical-align: middle; text-align: center">
@@ -38,9 +38,9 @@
             @endforeach
             <td>{{ $val->release}}</td>
             <td>
-            <a href="{{ route('edit-movie', $val->id) }}" class="btn btn-primary">Editar</button></a>
-            <form action="{{ route('delete-movie', $val->id)}}" method="POST" style="display: inline;">
-                @method('DELETE')
+                <a href="{{ route('edit-movie', $val->id) }}" class="btn btn-primary">Editar</button></a>
+                <form action="{{ route('delete-movie', $val->id)}}" method="POST" style="display: inline;">
+                    @method('DELETE')
                     @csrf
                     <button class="btn btn-danger" type="submit" onclick="return confirm('Tem certeza?')">Deletar</button>
                 </form>
