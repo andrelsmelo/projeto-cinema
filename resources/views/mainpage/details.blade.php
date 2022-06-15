@@ -3,79 +3,84 @@
 @section('titulo', 'Detalhes')
 
 @section('conteudo')
-<div class="container" style="margin-top: 35px">
-    <h1>{{$movie->name}}</h1>
-    <div class="row">
-        <div class="col-3">
-            <div>
-                <img src="{{ $movie->poster }}" style="border-radius: 5px; margin-bottom: 20px; width: 100%; ">
-            </div>
+<h1>{{$movie->name}}</h1>
+<div class="details">
+    <div class="details-column-img">
+        <img src="{{ $movie->poster }}" class="details-img">
+    </div>
+    <div class="details-row">
+        <div class="details-column-infos">
+            <ul>
+                <li>
+                    <strong>Gênero: </strong>
+                    {{$genre->name}}
+                </li>
+                <li>
+
+                    <strong>Classificação: </strong>
+                    {{$pegi->name}}
+
+                </li>
+                <li>
+
+                    <strong>Duração: </strong>
+                    {{ $movie->duration}}
+
+                </li>
+                <li>
+
+                    <strong>Ano de lançamento: </strong>
+                    {{ $movie->release}}
+
+                </li>
+            </ul>
         </div>
-        <div class="col-3">
-            <div>
-                <div class="details" style="height: 90px; line-height: 90px;">
-                    <ul>
-                        <li>
-                            <div>
-                                <strong>Gênero: </strong>
-                                {{$genre->name}}
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <strong>Classificação: </strong>
-                                {{$pegi->name}}
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <strong>Duração: </strong>
-                                {{ $movie->duration}}
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <strong>Ano de lançamento: </strong>
-                                {{ $movie->release}}
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-3">
-            <div>
-                <div class="details" style="height: 30px; line-height: 30px;">
-                    <ul>
-                        <h4>Proximas sessões</h4>
-                        @foreach($moviesShown as $val)
-                        <li>
-                            <div>
-                                {{$val->session_date}},
-                                @foreach($sessions as $val2)
-                                @if($val->sessions_id == $val2->id)
-                                {{$val2->session_hour}},
-                                @endif
-                                @endforeach
-                                @foreach($rooms as $val2)
-                                @if($val->rooms_id == $val2->id)
-                                {{$val2->name}}
-                                @endif
-                                @endforeach
-                            </div>
-                        </li>
+        <div class="details-column-sessions">
+            <ul>
+                @foreach($moviesShown as $val)
+                            @if($val->movies_id == $movie->id && $val->session_date < date('Y-m-d')) <h6>Ultimas Sessões</h6>
+                                <li>
+                                    {{$val->session_date}},
+                                        @foreach($sessions as $val2)
+                                            @if($val->sessions_id == $val2->id)
+                                                {{$val2->session_hour}},
+                                            @endif
+                                        @endforeach
+                                        @foreach($rooms as $val2)
+                                            @if($val->rooms_id == $val2->id)
+                                                {{$val2->name}}
+                                            @endif
+                                        @endforeach
+                                </li>
+                            @endif
+                @endforeach
+
+                    @foreach($moviesShown as $val)
+                    @if($moviesShown->movies_id = $movie->id && $val->session_date >= date('Y-m-d'))
+                    <h6>Proximas Sessões</h6>
+                    <li>
+                        {{$val->session_date}},
+                        @foreach($sessions as $val2)
+                        @if($val->sessions_id == $val2->id)
+                        {{$val2->session_hour}},
+                        @endif
                         @endforeach
-                    </ul>
-                </div>
-            </div>
+                        @foreach($rooms as $val2)
+                        @if($val->rooms_id == $val2->id)
+                        {{$val2->name}}
+                        @endif
+                        @endforeach
+                    </li>
+                    @endif
+                    @endforeach
+            </ul>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
+</div>
+<div class="row">
+        <div class="details-bottom">
             <h3>Sinopse</h3>
-            <div>
-                <p>{{ $movie->sinopse }}</p>
-            </div>
+            <p>{{ $movie->sinopse }}</p>
         </div>
     </div>
-    @endsection
+@endsection

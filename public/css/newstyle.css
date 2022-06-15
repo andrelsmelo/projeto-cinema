@@ -76,3 +76,45 @@ h1{
 table{
     margin-top: 8px;
 }
+
+.details-sessions ul {
+    background-color: red;
+    height: 30px;
+    line-height: 30px;
+}
+
+.details-img{
+    width: 100%;
+    align-items: center;
+}
+.details {
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+.details-column-img {
+    width: 25%;
+    float: left;
+    align-items: center;
+}
+
+.details-column-infos {
+    margin-left: 10px;
+    vertical-align: middle;
+    line-height: 70px;
+    align-items: center;
+    float:left;
+    width: 18%;
+    padding: 5px;
+  }
+
+  .details-column-sessions {
+    margin-left: 170px;
+    vertical-align: middle;
+    line-height: 70px;
+    align-items: center;
+    float:left;
+    width: 35%;
+    padding: 5px;
+  }
