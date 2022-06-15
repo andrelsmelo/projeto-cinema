@@ -3,17 +3,17 @@
 @section('titulo', 'Criar Sessão')
 
 @section('conteudo')
-<div style="text-align: center">
+<div>
     <h1>Está é a tela de Gerenciamento de Sessões</h1>
 </div>
 
-<form action="{{ route('create-session') }}" method="POST">
+<form action="{{ route('create-session') }}" class="form-sessions" method="POST">
     @csrf
-    <div class="mb-3">
+    <div class="col-sm-3 my-3">
         <label for="session_date" class="form-label">Data</label>
         <input type="date" class="form-control" id="session_date" name="session_date" placeholder="Digite a data da Sessão" required>
     </div>
-    <div class="mb-3">
+    <div class="col-sm-3 my-3">
         <label for="rooms_id" class="form-label">Sala</label>
         <select name="rooms_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
             <option selected value="">Selecione uma Sala</option>
@@ -22,7 +22,7 @@
             @endforeach
         </select>
     </div>
-    <div class="mb-3">
+    <div class="col-sm-3 my-3">
         <label for="sessions_id" class="form-label">Horario</label>
         <select name="sessions_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
             <option selected value="">Selecione um Horario</option>
@@ -31,7 +31,7 @@
             @endforeach
         </select>
     </div>
-    <div class="mb-3">
+    <div class="col-sm-4 my-3">
         <label for="movies_id" class="form-label">Filme</label>
         <select name="movies_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
             <option selected value="">Selecione um Filme</option>
@@ -41,11 +41,13 @@
 
         </select>
     </div>
-    <button class="btn btn-success" type="submit">Enviar</button>
+    <div class="create-button">
+        <button class="btn btn-success" id="create-button" type="submit">Enviar</button>
+    </div>
 </form>
 
-<table class="table table-dark table-striped" style="width:100%">
-    <thead class="thead-dark" style="vertical-align: middle; text-align: center">
+<table class="table table-dark table-striped">
+    <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
             <th scope="col">Data</th>
@@ -56,7 +58,7 @@
             <th scope="col">Ações</th>
         </tr>
     </thead>
-    <tbody style="vertical-align: middle; text-align: center">
+    <tbody>
         @foreach($moviesShown as $val)
         <tr>
             <th scope="row">{{ $val->id }}</th>
