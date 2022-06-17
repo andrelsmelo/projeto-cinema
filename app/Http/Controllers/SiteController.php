@@ -75,9 +75,9 @@ class SiteController extends Controller
         $moviesShown = MoviesShown::where('movies_id', $id)->get();
         $sessions = Sessions::get();
         $rooms = Rooms::get();
-        $movie = Movies::find($id);
-        $genre = Genre::find($movie->genre_id);
-        $pegi = Pegi::find($movie->pegi_id);
+        $movie = Movies::findOrFail($id);
+        $genre = Genre::findOrFail($movie->genre_id);
+        $pegi = Pegi::findOrFail($movie->pegi_id);
         return view('mainpage.details',[
             'movie' => $movie,
             'genre' => $genre,

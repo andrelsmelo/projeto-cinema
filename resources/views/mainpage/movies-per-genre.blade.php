@@ -11,7 +11,7 @@
     @foreach($moviesPerGenre as $val)
     <div class="container mx-auto px-6 py-16 flex">
       <div>
-        <a href="{{ route('movie-details', $val->id)}}"><img src="{{ $val->poster }}" style="border-radius: 5px; margin-bottom: 20px; width: 90%"></a>
+        <a href="{{ route('movie-details', $val->id)}}"><img src="{{ $val->poster }}" class="img-fluid w-25% rounded"></a>
       </div>
     </div>
     @endforeach

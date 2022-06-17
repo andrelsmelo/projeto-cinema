@@ -3,39 +3,43 @@
 @section('titulo', 'Salas')
 
 @section('conteudo')
-<div style="text-align: center">
-    <h1>Está é a tela de Gerenciamento de Salas</h1>
-</div>
-@csrf
-<td>
-    <a href="{{route('create-room')}}"><button type="button" class="btn btn-success">Nova Sala</button></a>
-</td>
-<table class="table table-dark table-striped" style="width:100%">
-    <thead class="thead-dark" style="vertical-align: middle; text-align: center">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Capacidade</th>
-            <th scope="col">Ações</th>
-        </tr>
-    </thead>
-    <tbody style="vertical-align: middle; text-align: center">
-        @foreach($rooms as $val)
-        <tr>
-            <th scope="row">{{ $val->id }}</th>
-            <td>{{ $val->name }}</td>
-            </td>
-            <td>{{ $val->capacity}}</td>
-            <td>
-                <a href="{{ route('edit-room', $val->id) }}" class="btn btn-primary">Editar</a>
-                <form action="{{ route('delete-room', $val->id)}}" method="POST" style="display: inline;">
-                    @method('DELETE')
-                    @csrf
-                    <button class="btn btn-danger" type="submit" onclick="return confirm('Tem certeza?')">Deletar</button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
+    <div class="row justify-content-center mb-4">
+        <div class="col-6 text-center align-middle">
+            <h2>Está é a tela de Gerenciamento de Salas</h2>
+            @csrf
+            <a href="{{ route('create-room') }}"><button type="button" class="btn btn-success">Nova Sala</button></a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-dark table-striped text-center align-middle">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="col-1">#</th>
+                    <th class="col-4">Nome</th>
+                    <th class="col-3">Capacidade</th>
+                    <th class="col-4">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($rooms as $val)
+                    <tr>
+                        <th scope="row">{{ $val->id }}</th>
+                        <td>{{ $val->name }}</td>
+                        </td>
+                        <td>{{ $val->capacity }}</td>
+                        <td>
+                            <a href="{{ route('edit-room', $val->id) }}" class="btn btn-primary">Editar</a>
+                            <form action="{{ route('delete-room', $val->id) }}" method="POST" class="d-inline">
+                                @method('DELETE')
+                                @csrf
+                                <button class="btn btn-danger" type="submit"
+                                    onclick="return confirm('Tem certeza?')">Deletar</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
 @endsection
