@@ -5,9 +5,9 @@
 @section('conteudo')
   <div class="row justify-content-center">
       <h1 class="text-center fs-1">Filmes em cartaz</h1>
-      <div class="d-flex col-4 ">
+      <div class="d-flex col-4">
           <i class="bi bi-search me-3 "></i>
-          <input class="form-control" id="input-text" type="text" placeholder="Buscar">
+          <input class="form-control text-center" id="input-text" type="text" placeholder="Buscar">
       </div>
   </div>
   <div class="row">
@@ -23,7 +23,7 @@
     </div>
     <div class="col-sm-10" id="myGrid">
           @foreach ($movies as $val)
-                  <a href="{{ route('movie-details', $val->id) }}"><img src="{{ $val->poster }}" class="img-fluid m-4 rounded" style="width: 20%"></a>
+                  <a href="{{ route('movie-details', $val->id) }}"><img src="{{ $val->poster }}" class="img-fluid m-2 rounded" style="width: 20%"></a>
                   <p hidden>{{ $val->tags }}</p>
                   @foreach ($genres as $val2)
                       @if ($val->genre_id == $val2->id)

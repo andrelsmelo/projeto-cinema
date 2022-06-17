@@ -23,6 +23,11 @@
                 required>
         </div>
         <div class="mb-3">
+            <label for="trailer" class="form-label">Link Video</label>
+            <input type="text" class="form-control" id="trailer" name="trailer"
+                placeholder="Insira os digitos do link do trailer após a tag 'watch?v='" required>
+        </div>
+        <div class="mb-3">
             <label for="poster" class="form-label">Link Poster</label>
             <input type="text" class="form-control" id="poster" name="poster"
                 placeholder="Cole o link do Poster aqui" required>
