@@ -63,7 +63,7 @@ class MovieController extends Controller
             'trailer' => ['required','max: 255'],
             'release' => ['required', 'max: 4'],
             'genre_id' => ['required', 'exists:genres,id'],
-            'sinopse' => ['required', 'max: 255'],
+            'sinopse' => ['required'],  
             'tags' => ['required','max: 255']
         ]);
 
@@ -120,7 +120,7 @@ class MovieController extends Controller
             'trailer' => ['required','max: 255'],
             'release' => ['required', 'max: 4'],
             'genre_id' => ['required', 'exists:genres,id'],
-            'sinopse' => ['required', 'max: 255'],
+            'sinopse' => ['required'],
             'tags' => ['required','max: 255']
         ]);
 
