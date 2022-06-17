@@ -3,17 +3,19 @@
 @section('titulo', 'Página Inicial')
 
 @section('conteudo')
-    <div class="row justify-content-center">
+    <div class="row justify-content-center align-middle">
         <h1>Esses são os filmes das proximas sessões</h1>
         <div class="col-4">
             <label for="session_date" class="form-label">Data</label>
             <input type="date" class="form-control" id="input-date" name="input-date" placeholder="Digite a data da Sessão"
                 required>
-            <i class="bi bi-search me-3"></i>
-            <input class="form-control" id="input-text" type="text" placeholder="Buscar">
+            <div class="row">
+                <i class="bi bi-search me-3"><input class="form-control d-inline" id="input-text" type="text"
+                        placeholder="Buscar"></i>
+            </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row justify-content-center">
         <table class="table table-dark table-striped fs-4" id="myTable">
             <thead class="thead-dark text-center">
                 <tr>

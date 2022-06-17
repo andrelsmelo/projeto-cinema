@@ -17,6 +17,7 @@ class CreateMoviesTable extends Migration
             $table->id();
             $table->string('name', 100);
             $table->longText('poster');
+            $table->longText('trailer');
             $table->time('duration');
             $table->year('release');
             $table->unsignedBigInteger('pegi_id');

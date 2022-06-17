@@ -6,12 +6,11 @@
 <h1>{{$movie->name}}</h1>
 <div class="details me-4">
     <div class="details-column-img">
-        <img src="{{ $movie->poster }}" class="details-img">
+        <img src="{{ $movie->poster }}" class="img-fluid w-25">
     </div>
     <div class="details-row ms-4">
         <div>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/KnrRy6kSFF0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+            <iframe width="560" height="315" src="{{ $movie->trailer}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         <div class="details-column-infos">
             <ul>
                 <li>
