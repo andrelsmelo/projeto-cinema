@@ -21,7 +21,7 @@
                 @csrf
                 <div>
                     <label for="session_date" class="form-label">Data</label>
-                    <input type="date" class="form-control text-center  " id="session_date" name="session_date"
+                    <input type="date" class="form-control text-center" id="session_date" name="session_date"
                         placeholder="Digite a data da Sessão" required>
                 </div>
                 <div class="mt-3">
@@ -61,7 +61,7 @@
         </div>
     </div>
     <div class="row text-center align-middle justify-content-center">
-        <table class="table table-dark table-striped">
+        <table class="table table-dark table-striped" id="myTable">
             <thead class="thead-dark">
                 <tr>
                     <th class="col-1">#</th>
@@ -110,6 +110,20 @@
         </table>
     </div>
     <script>
+            $(document).ready(function() {
+            var value = $("#session_date").val();
+            $("#myTable tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        })
+        $(document).ready(function() {
+            $("#session_date").on("change", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
         var today = new Date().toISOString().split('T')[0];
         document.getElementsByName("session_date")[0].setAttribute('min', today);
         document.getElementsByName("session_date")[0].setAttribute('value', today);
