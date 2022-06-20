@@ -39,7 +39,7 @@
                                     Filmes</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{{ route('view-rooms') }}">Editar De
+                                <a class="nav-link active" aria-current="page" href="{{ route('view-rooms') }}">Editor De
                                     Salas</a>
                             </li>
                         @endcan
