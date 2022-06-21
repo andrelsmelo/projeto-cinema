@@ -26,7 +26,7 @@
                 </div>
                 <div class="mt-3">
                     <label for="rooms_id" class="form-label">Sala</label>
-                    <select name="rooms_id" class="form-select form-select-sm text-center"
+                    <select name="rooms_id" id="salaSelected" class="form-select form-select-sm text-center"
                         aria-label=".form-select-sm example" required>
                         <option selected value="">Selecione uma Sala</option>
                         @foreach ($rooms as $val)
@@ -124,6 +124,16 @@
                 });
             });
         });
+        $(document).ready(function() {
+            $("#salaSelected").on("change", function() {
+                var value = $(this).val().toLowerCase();
+                console.log(value);
+                $("#myTable tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
         var today = new Date().toISOString().split('T')[0];
         document.getElementsByName("session_date")[0].setAttribute('min', today);
         document.getElementsByName("session_date")[0].setAttribute('value', today);

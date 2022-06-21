@@ -29,6 +29,7 @@ class SessionController extends Controller
         $moviesShown = MoviesShown::get();
 
 
+
         return view('sessions.create', [
             'movies' => $movies,
             'rooms' => $rooms,
@@ -48,32 +49,43 @@ class SessionController extends Controller
 
         $request->validate([
             "session_date" => ['required'],
-            "rooms_id" => ['required','exists:rooms,id'],
-            "sessions_id" => ['required','exists:sessions,id'],
-            "movies_id" => ['required','exists:movies,id']
+            "rooms_id" => ['required', 'exists:rooms,id'],
+            "sessions_id" => ['required', 'exists:sessions,id'],
+            "movies_id" => ['required', 'exists:movies,id']
         ]);
 
         $data = $request->except('_token');
+
         $duration = Movies::find($data['movies_id'])->only('duration');
-        $newSession = Arr::add($data, 'movie_duration', Arr::get($duration, 'duration'));
+
+        $sessionHour = Sessions::find($data['sessions_id'])->only('session_hour');
+        $endOfSession = strtotime($sessionHour['session_hour']) + strtotime($duration['duration']);
+        $secSessionHour = strtotime($sessionHour['session_hour']) - strtotime('TODAY');
+        $secEndOfSession = strtotime($duration['duration']) - strtotime('TODAY');
+        $endOfSessionHour = gmdate("H:i:s", $secEndOfSession + $secSessionHour);
+
+        $data = Arr::add($data, 'movie_duration', Arr::get($duration, 'duration'));
+        $data = Arr::add($data, 'end_of_session', $endOfSessionHour);
 
         $moviesShown = MoviesShown::get();
 
         $sessions = $moviesShown->map(function ($moviesShown) {
             return collect($moviesShown->toArray())
-                ->only(['session_date', 'rooms_id', 'sessions_id'])
+                ->only(['session_date', 'rooms_id', 'sessions_id', 'end_of_session'])
                 ->all();
         });
 
         foreach ($sessions as $key => $value) {
-            if ($value['session_date'] == $newSession['session_date']) {
-                if ($value['rooms_id'] == $newSession['rooms_id'] && $value['sessions_id'] == $newSession['sessions_id']) {
-                    abort(400);
+            if ($value['session_date'] == $data['session_date']) {
+                if ($value['rooms_id'] == $data['rooms_id']) {
+                    if ($value['end_of_session'] >= $sessionHour['session_hour']) {
+                        abort(400, 'Não é possivel criar uma sessão nesse horário');
+                    }
                 }
             }
         }
 
-        MoviesShown::create($newSession);
+        MoviesShown::create($data);
 
         return redirect('/sessoes');
     }
@@ -91,7 +103,7 @@ class SessionController extends Controller
         $rooms = Rooms::get();
         $sessions = Sessions::get();
         $movies = Movies::get();
-        
+
 
         return view('sessions.edit', [
             'moviesShown' => $moviesShown,
@@ -110,6 +122,7 @@ class SessionController extends Controller
     public function update(int $id, Request $request)
     {
         Gate::authorize('access-admin');
+
         $request->validate([
             "session_date" => [],
             "rooms_id" => ['exists:rooms,id'],
@@ -117,16 +130,21 @@ class SessionController extends Controller
             "movies_id" => ['exists:movies,id']
         ]);
         $moviesShown = MoviesShown::get();
+        $sessionHour = Sessions::find($request['sessions_id'])->only('session_hour');
 
         $sessions = $moviesShown->map(function ($moviesShown) {
             return collect($moviesShown->toArray())
-                ->only(['session_date', 'rooms_id', 'sessions_id', 'movies_id'])
+                ->only(['session_date', 'rooms_id', 'sessions_id', 'movies_id','end_of_session'])
                 ->all();
         });
-        
+
         foreach ($sessions as $key => $value) {
-            if ( $value['session_date'] == $request['session_date'] && $value['rooms_id'] == $request['rooms_id']) {
-            abort(400);
+            if ($value['session_date'] == $request['session_date']) {
+                if ($value['rooms_id'] == $request['rooms_id']) {
+                    if ($value['end_of_session'] >= $sessionHour['session_hour']) {
+                        abort(400, 'Não é possivel editar a sessão para esse horário');
+                    }
+                }
             }
         }
 

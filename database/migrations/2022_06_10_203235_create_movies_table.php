@@ -27,6 +27,7 @@ class CreateMoviesTable extends Migration
             $table->text('sinopse');
             $table->string('tags');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

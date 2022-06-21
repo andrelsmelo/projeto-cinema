@@ -30,7 +30,6 @@ require __DIR__.'/auth.php';
 Route::get('/',[SiteController::class, 'index'])->name('index');
 Route::get('/em-cartaz',[SiteController::class, 'showingMovies'])->name('movies');
 Route::get('/em-cartaz/{id}',[SiteController::class, 'movieDetails'])->name('movie-details');
-Route::get('/genres/{genre_id}',[SiteController::class, 'moviesPerGenre'])->name('movies-per-genres');
 
 //Rotas CRUD de Sessões
 

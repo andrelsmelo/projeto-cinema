@@ -161,7 +161,7 @@ class MovieController extends Controller
 
         foreach ($sessions as $key => $value) {
             if ( $value['movies_id'] == $id) {
-            abort(400);
+            abort(400, 'Não é possivel deletar um filme que existe em uma sessão');
             }
         }
         

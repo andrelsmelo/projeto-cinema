@@ -83,6 +83,13 @@ class RoomController extends Controller
         Gate::authorize('access-admin');
 
         $room = Rooms::findOrFail($id);
+        $rooms = Rooms::get();
+
+        foreach($rooms as $key => $value){
+            if($value['name'] == $request['name']){
+                abort(400, 'Já existe uma sala com esse nome');
+            }
+        }
 
         $room->update($request->except('_token'));
 
@@ -108,7 +115,7 @@ class RoomController extends Controller
 
         foreach ($sessions as $key => $value) {
             if ( $value['rooms_id'] == $id) {
-            abort(400);
+            abort(400, 'Não é possivel deletar uma sala que existe em uma sessão');
             }
         }
         

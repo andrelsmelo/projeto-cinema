@@ -23,7 +23,9 @@ class CreateMoviesShownsTable extends Migration
             $table->unsignedBigInteger('movies_id');
             $table->foreign('movies_id')->references('id')->on('movies');
             $table->time('movie_duration');
+            $table->time('end_of_session');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

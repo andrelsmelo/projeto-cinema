@@ -18,6 +18,7 @@ class CreateRoomsTable extends Migration
             $table->string('name', 45);
             $table->unsignedBigInteger('capacity');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
