@@ -44,9 +44,13 @@ class SiteController extends Controller
     {
         $movies = Movies::get();
         $genres = Genre::get();
+        
+        $moviesShown = MoviesShown::select('movies_id')->where('session_date', '>=', date("Y-m-d"))->where('session_date', '<=', date('Y-m-d', strtotime('+10 days')))->distinct()->get();
+
         return view('mainpage.movies',[
             'movies' => $movies,
-            'genres' => $genres
+            'genres' => $genres,
+            'moviesShown' => $moviesShown
         ]);
     }
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Genre;
 use App\Models\Movies;
+use App\Models\MoviesShown;
 use App\Models\Pegi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -149,6 +150,20 @@ class MovieController extends Controller
     public function delete(int $id)
     {
         Gate::authorize('access-admin');
+
+        $moviesShown = MoviesShown::get();
+        
+        $sessions = $moviesShown->map(function ($moviesShown) {
+            return collect($moviesShown->toArray())
+                ->only(['session_date', 'rooms_id', 'sessions_id', 'movies_id'])
+                ->all();
+        });
+
+        foreach ($sessions as $key => $value) {
+            if ( $value['movies_id'] == $id) {
+            abort(400);
+            }
+        }
         
         $movie = Movies::findOrFail($id);
 

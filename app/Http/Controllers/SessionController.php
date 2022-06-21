@@ -68,7 +68,7 @@ class SessionController extends Controller
         foreach ($sessions as $key => $value) {
             if ($value['session_date'] == $newSession['session_date']) {
                 if ($value['rooms_id'] == $newSession['rooms_id'] && $value['sessions_id'] == $newSession['sessions_id']) {
-                    abort(401);
+                    abort(400);
                 }
             }
         }
@@ -91,6 +91,7 @@ class SessionController extends Controller
         $rooms = Rooms::get();
         $sessions = Sessions::get();
         $movies = Movies::get();
+        
 
         return view('sessions.edit', [
             'moviesShown' => $moviesShown,
@@ -115,6 +116,19 @@ class SessionController extends Controller
             "sessions_id" => ['exists:sessions,id'],
             "movies_id" => ['exists:movies,id']
         ]);
+        $moviesShown = MoviesShown::get();
+
+        $sessions = $moviesShown->map(function ($moviesShown) {
+            return collect($moviesShown->toArray())
+                ->only(['session_date', 'rooms_id', 'sessions_id', 'movies_id'])
+                ->all();
+        });
+        
+        foreach ($sessions as $key => $value) {
+            if ( $value['session_date'] == $request['session_date'] && $value['rooms_id'] == $request['rooms_id']) {
+            abort(400);
+            }
+        }
 
         $data = $request->except('_token');
         $moviesShown = MoviesShown::find($id);
