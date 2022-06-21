@@ -58,9 +58,9 @@ class SessionController extends Controller
 
         $duration = Movies::find($data['movies_id'])->only('duration');
 
-        $sessionHour = Sessions::find($data['sessions_id'])->only('session_hour');
-        $endOfSession = strtotime($sessionHour['session_hour']) + strtotime($duration['duration']);
-        $secSessionHour = strtotime($sessionHour['session_hour']) - strtotime('TODAY');
+        $newSessionHour = Sessions::find($data['sessions_id'])->only('session_hour');
+        $endOfSession = strtotime($newSessionHour['session_hour']) + strtotime($duration['duration']);
+        $secSessionHour = strtotime($newSessionHour['session_hour']) - strtotime('TODAY');
         $secEndOfSession = strtotime($duration['duration']) - strtotime('TODAY');
         $endOfSessionHour = gmdate("H:i:s", $secEndOfSession + $secSessionHour);
 
@@ -76,12 +76,19 @@ class SessionController extends Controller
         });
 
         foreach ($sessions as $key => $value) {
-            if ($value['session_date'] == $data['session_date']) {
-                if ($value['rooms_id'] == $data['rooms_id']) {
-                    if ($value['end_of_session'] >= $sessionHour['session_hour']) {
-                        abort(400, 'Não é possivel criar uma sessão nesse horário');
-                    }
-                }
+
+            $sessionsHour = Sessions::find($value['sessions_id'])->only('session_hour');
+            
+            if ($value['session_date'] == $data['session_date']
+            && $value['rooms_id'] == $data['rooms_id']
+            && $value['sessions_id'] == $data['sessions_id']) {
+                abort(400, 'Já existe uma sessão para esse horário');
+            } elseif($value['end_of_session'] >= $newSessionHour['session_hour']
+            && $newSessionHour['session_hour'] > $sessionsHour['session_hour'] ){
+                abort(400, 'Existe um filme nesse horario');
+            } elseif($value['end_of_session'] >= $newSessionHour['session_hour']
+            && $sessionsHour['session_hour'] < $data['end_of_session'] ){
+                abort(400, 'O Filme Conflita com o da proxima sessão');
             }
         }
 
@@ -134,7 +141,7 @@ class SessionController extends Controller
 
         $sessions = $moviesShown->map(function ($moviesShown) {
             return collect($moviesShown->toArray())
-                ->only(['session_date', 'rooms_id', 'sessions_id', 'movies_id','end_of_session'])
+                ->only(['session_date', 'rooms_id', 'sessions_id', 'movies_id', 'end_of_session'])
                 ->all();
         });
 

@@ -15,7 +15,7 @@ class CreatePegisTable extends Migration
     {
         Schema::create('pegis', function (Blueprint $table) {
             $table->id();
-            $table->string('name',3);
+            $table->string('name',5);
             $table->timestamps();
         });
     }

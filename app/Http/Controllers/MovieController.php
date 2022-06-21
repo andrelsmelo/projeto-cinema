@@ -115,9 +115,9 @@ class MovieController extends Controller
         
         $request->validate([
             'name' => ['required', 'max: 255'],
-            'duration' => ['required','max: 255'],
+            'duration' => ['required'],
             'pegi_id' => ['required', 'exists:pegis,id'],
-            'poster' => ['required','max: 255'],
+            'poster' => ['required'],
             'trailer' => ['required','max: 255'],
             'release' => ['required', 'max: 4'],
             'genre_id' => ['required', 'exists:genres,id'],

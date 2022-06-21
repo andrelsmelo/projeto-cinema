@@ -84,7 +84,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'De Volta para o Futuro',
                 'duration' => '01:56:00',
-                'pegi_id' => '3',
+                'pegi_id' => '1',
                 'trailer' => 'qvsgGtivCgs',
                 'poster' => 'https://br.web.img3.acsta.net/medias/nmedia/18/90/95/62/20122008.jpg',
                 'release' => '1985',
@@ -117,7 +117,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'Gladiador',
                 'duration' => '02:35:00',
-                'pegi_id' => '3',
+                'pegi_id' => '5',
                 'trailer' => 'P5ieIbInFpg',
                 'poster' => 'https://upload.wikimedia.org/wikipedia/pt/4/44/GladiadorPoster.jpg',
                 'release' => '2000',
@@ -128,7 +128,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'Logan',
                 'duration' => '02:17:00',
-                'pegi_id' => '4',
+                'pegi_id' => '5',
                 'trailer' => 'KPND6SgkN7Q',
                 'poster' => 'https://img.elo7.com.br/product/zoom/26772FF/big-poster-filme-marvel-logan-lo02-tamanho-90x60-cm-poster-de-filme.jpg',
                 'release' => '2017',
@@ -139,7 +139,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'Bastardos Inglórios',
                 'duration' => '02:33:00',
-                'pegi_id' => '5',
+                'pegi_id' => '6',
                 'trailer' => 'KnrRy6kSFF0',
                 'poster' => 'https://br.web.img2.acsta.net/medias/nmedia/18/90/43/36/20096333.jpg',
                 'release' => '2009',
@@ -150,7 +150,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'Forrest Gump',
                 'duration' => '02:20:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => 'bLvqoHBptjg',
                 'poster' => 'https://cinegarimpo.com.br/wp/content/uploads/2009/11/cinegarimpo_forrest-gump-movie_poster.jpg',
                 'release' => '1994',
@@ -205,7 +205,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'As Vantagens de Ser Invisível',
                 'duration' => '01:43:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => 'mgzV9aSS2y0',
                 'poster' => 'https://upload.wikimedia.org/wikipedia/pt/6/63/As-Vantagens-de-ser-Invisivel.jpg',
                 'release' => '2012',
@@ -216,7 +216,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'Clube dos Cinco',
                 'duration' => '01:37:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => 'EmqkaxOw6_o',
                 'poster' => 'https://br.web.img2.acsta.net/pictures/210/100/21010003_20130603204213408.jpg',
                 'release' => '1985',
@@ -227,7 +227,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'O Poderoso Chefão',
                 'duration' => '02:55:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => 'SaHZHU-44XA',
                 'poster' => 'https://br.web.img3.acsta.net/medias/nmedia/18/90/93/20/20120876.jpg',
                 'release' => '1972',
@@ -238,7 +238,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'Um Sonho de Liberdade',
                 'duration' => '02:22:00',
-                'pegi_id' => '4',
+                'pegi_id' => '5',
                 'trailer' => 'Y22NgkErOAk',
                 'poster' => 'https://br.web.img2.acsta.net/medias/nmedia/18/90/16/48/20083748.jpg',
                 'release' => '1994',
@@ -249,7 +249,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'O Resgate do Soldado Ryan',
                 'duration' => '02:50:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => 'dcz1Tvsx_f4',
                 'poster' => 'https://s2.glbimg.com/T9_QN3WDnMiCJBhjkRanrTWwoGA=/362x536/https://s2.glbimg.com/H9sLjnVv_eNaX8IBpjwBiu56778=/i.s3.glbimg.com/v1/AUTH_c3c606ff68e7478091d1ca496f9c5625/internal_photos/bs/2020/z/5/C1qeGsS5KhNsJrAEiwsg/2019-653-mk-filmes-paramount-o-resgate-do-soldado-ryan-poster.jpg',
                 'release' => '1998',
@@ -260,7 +260,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'Intocáveis',
                 'duration' => '01:52:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => '-Fb8h4gChlU',
                 'poster' => 'https://br.web.img2.acsta.net/medias/nmedia/18/89/89/00/20143859.jpg',
                 'release' => '2011',
@@ -282,7 +282,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'A Origem',
                 'duration' => '02:28:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => 'R_VX0e0PX90',
                 'poster' => 'https://musicart.xboxlive.com/7/e63b1100-0000-0000-0000-000000000002/504/image.jpg?w=1920&h=1080',
                 'release' => '2010',
@@ -293,7 +293,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'Matrix',
                 'duration' => '02:16:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => '2KnZac176Hs',
                 'poster' => 'https://br.web.img2.acsta.net/medias/nmedia/18/91/08/82/20128877.JPG',
                 'release' => '1999',
@@ -304,7 +304,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'O Exterminador do Futuro',
                 'duration' => '01:47:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => '0yfpLhW-Xyg',
                 'poster' => 'https://br.web.img2.acsta.net/medias/nmedia/18/92/91/08/20224693.jpg',
                 'release' => '1984',
@@ -315,7 +315,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'Diário de uma Paixão',
                 'duration' => '02:04:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => '9FRllA0YP3Y',
                 'poster' => 'https://br.web.img3.acsta.net/medias/nmedia/18/91/21/92/20135014.jpg',
                 'release' => '2004',
@@ -359,7 +359,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'O Sexto Sentido',
                 'duration' => '01:47:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => '3-ZP95NF_Wk',
                 'poster' => 'https://br.web.img2.acsta.net/medias/nmedia/18/90/53/94/20101506.jpg',
                 'release' => '1999',
@@ -370,7 +370,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'Psicose',
                 'duration' => '01:49:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => 'S-VmJXFW9-o',
                 'poster' => 'https://br.web.img3.acsta.net/pictures/14/10/07/20/12/205686.jpg',
                 'release' => '1960',
@@ -381,7 +381,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'Se7en - Os Sete Crimes Capitais',
                 'duration' => '02:07:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => 'znmZoVkCjpI',
                 'poster' => 'https://br.web.img3.acsta.net/pictures/210/124/21012465_2013061319170245.jpg',
                 'release' => '1995',
@@ -392,7 +392,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'Alien - O 8.º Passageiro',
                 'duration' => '01:57:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => 'LjLamj-b0I8',
                 'poster' => 'https://br.web.img3.acsta.net/pictures/15/05/14/21/14/504650.jpg',
                 'release' => '1979',
@@ -403,7 +403,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'O Exorcista',
                 'duration' => '02:12:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => 'cGAZPUKw3lU',
                 'poster' => 'https://images.filmesnocinema.com.br/covers/o-exorcista-versao-do-diretor-cf.',
                 'release' => '1973',
@@ -414,7 +414,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'Invocação do Mal',
                 'duration' => '01:52:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => 'GQrrXceHn2E',
                 'poster' => 'https://br.web.img2.acsta.net/pictures/210/166/21016629_2013062820083878.jpg',
                 'release' => '2013',
@@ -425,7 +425,7 @@ class MoviesSeeder extends Seeder
             [
                 'name' => 'O Iluminado',
                 'duration' => '02:26:00',
-                'pegi_id' => '3',
+                'pegi_id' => '4',
                 'trailer' => 'm6FRnb2AvvE',
                 'poster' => 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQgBcnfLW2H68J2aqMN3Fj7SOoDY05UYvZlepL_KkjIfC78dxyx',
                 'release' => '1980',

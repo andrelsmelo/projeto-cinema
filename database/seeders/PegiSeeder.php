@@ -15,11 +15,12 @@ class PegiSeeder extends Seeder
     public function run()
     {
         DB::table('pegis')->insert([
-            ['name' => '+3'],
-            ['name' => '+7'],
+            ['name' => 'Livre'],
+            ['name' => '+10'],
             ['name' => '+12'],
+            ['name' => '+14'],
             ['name' => '+16'],
-            ['name' => '+18']
+            ['name' => '+18'],
         ]);
     }
 }
