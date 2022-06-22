@@ -81,10 +81,14 @@ class SessionController extends Controller
             && $value['rooms_id'] == $data['rooms_id']
             && $value['sessions_id'] == $data['sessions_id']) {
                 abort(400, 'Já existe uma sessão para esse horário');
-            } elseif($newSessionHour['session_hour'] > $sessionsHour['session_hour']
+            } elseif($value['session_date'] == $data['session_date']
+            && $value['rooms_id'] == $data['rooms_id']
+            && $newSessionHour['session_hour'] > $sessionsHour['session_hour']
             && $newSessionHour['session_hour'] < $value['end_of_session']){
                 abort(400, 'Existe uma sessão passando nesse horario');
-            } elseif($newSessionHour['session_hour'] < $sessionsHour['session_hour']
+            } elseif($value['session_date'] == $data['session_date']
+            && $value['rooms_id'] == $data['rooms_id']
+            && $newSessionHour['session_hour'] < $sessionsHour['session_hour']
             && $data['end_of_session'] > $sessionsHour['session_hour']
             ) {
                 abort(400, 'O filme conflita com o da proxima sessão');
