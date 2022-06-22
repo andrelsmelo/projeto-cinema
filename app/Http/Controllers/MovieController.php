@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pegi;
 use App\Models\Genre;
 use App\Models\Movies;
 use App\Models\MoviesShown;
-use App\Models\Pegi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 

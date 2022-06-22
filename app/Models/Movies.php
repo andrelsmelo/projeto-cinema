@@ -10,9 +10,9 @@ class Movies extends Model
 {
     protected $fillable = ['name', 'duration', 'pegi_id', 'poster','trailer', 'release', 'genre_id','tags', 'sinopse'];
     
-    protected $dates = ['deleted_at'];
-
     use SoftDeletes;
     
+    protected $dates = ['deleted_at'];
+
     use HasFactory;
 }

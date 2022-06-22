@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Genre;
-use App\Models\Movies;
-use App\Models\MoviesShown;
-use App\Models\Pegi;
 use App\Models\Rooms;
+use App\Models\Movies;
 use App\Models\Sessions;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use App\Models\MoviesShown;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class SessionController extends Controller
@@ -83,12 +81,13 @@ class SessionController extends Controller
             && $value['rooms_id'] == $data['rooms_id']
             && $value['sessions_id'] == $data['sessions_id']) {
                 abort(400, 'Já existe uma sessão para esse horário');
-            } elseif($value['end_of_session'] >= $newSessionHour['session_hour']
-            && $newSessionHour['session_hour'] > $sessionsHour['session_hour'] ){
-                abort(400, 'Existe um filme nesse horario');
-            } elseif($value['end_of_session'] >= $newSessionHour['session_hour']
-            && $sessionsHour['session_hour'] < $data['end_of_session'] ){
-                abort(400, 'O Filme Conflita com o da proxima sessão');
+            } elseif($newSessionHour['session_hour'] > $sessionsHour['session_hour']
+            && $newSessionHour['session_hour'] < $value['end_of_session']){
+                abort(400, 'Existe uma sessão passando nesse horario');
+            } elseif($newSessionHour['session_hour'] < $sessionsHour['session_hour']
+            && $data['end_of_session'] > $sessionsHour['session_hour']
+            ) {
+                abort(400, 'O filme conflita com o da proxima sessão');
             }
         }
 
@@ -137,27 +136,41 @@ class SessionController extends Controller
             "movies_id" => ['exists:movies,id']
         ]);
         $moviesShown = MoviesShown::get();
-        $sessionHour = Sessions::find($request['sessions_id'])->only('session_hour');
 
         $sessions = $moviesShown->map(function ($moviesShown) {
             return collect($moviesShown->toArray())
                 ->only(['session_date', 'rooms_id', 'sessions_id', 'movies_id', 'end_of_session'])
                 ->all();
         });
+        $data = $request->except('_token');
+        $duration = Movies::find($data['movies_id'])->only('duration');
+        $newSessionHour = Sessions::find($data['sessions_id'])->only('session_hour');
+        $endOfSession = strtotime($newSessionHour['session_hour']) + strtotime($duration['duration']);
+        $secSessionHour = strtotime($newSessionHour['session_hour']) - strtotime('TODAY');
+        $secEndOfSession = strtotime($duration['duration']) - strtotime('TODAY');
+        $endOfSessionHour = gmdate("H:i:s", $secEndOfSession + $secSessionHour);
+
+        $data = Arr::add($data, 'movie_duration', Arr::get($duration, 'duration'));
+        $data = Arr::add($data, 'end_of_session', $endOfSessionHour);
 
         foreach ($sessions as $key => $value) {
-            if ($value['session_date'] == $request['session_date']) {
-                if ($value['rooms_id'] == $request['rooms_id']) {
-                    if ($value['end_of_session'] >= $sessionHour['session_hour']) {
-                        abort(400, 'Não é possivel editar a sessão para esse horário');
-                    }
-                }
+
+            $sessionsHour = Sessions::find($value['sessions_id'])->only('session_hour');
+            
+            if ($value['session_date'] == $data['session_date']
+            && $value['rooms_id'] == $data['rooms_id']
+            && $value['sessions_id'] == $data['sessions_id']) {
+                abort(400, 'Já existe uma sessão para esse horário');
+            } elseif($newSessionHour['session_hour'] > $sessionsHour['session_hour']
+            && $newSessionHour['session_hour'] < $value['end_of_session']){
+                abort(400, 'Existe uma sessão passando nesse horario');
+            } elseif($newSessionHour['session_hour'] < $sessionsHour['session_hour']
+            && $data['end_of_session'] > $sessionsHour['session_hour']) {
+                abort(400, 'O filme conflita com o da proxima sessão');
             }
         }
 
-        $data = $request->except('_token');
         $moviesShown = MoviesShown::find($id);
-        $duration = Movies::find($data['movies_id'])->only('duration');
         $newdata = Arr::add($data, 'movie_duration', Arr::get($duration, 'duration'));
 
         $moviesShown->update($newdata);

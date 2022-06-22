@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Genre;
-use App\Models\Movies;
-use App\Models\MoviesShown;
 use App\Models\Pegi;
+use App\Models\Genre;
 use App\Models\Rooms;
+use App\Models\Movies;
 use App\Models\Sessions;
+use App\Models\MoviesShown;
 use Illuminate\Http\Request;
 
 class SiteController extends Controller

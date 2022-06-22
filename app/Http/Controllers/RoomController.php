@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MoviesShown;
 use App\Models\Rooms;
+use App\Models\MoviesShown;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
