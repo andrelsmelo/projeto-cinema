@@ -46,8 +46,8 @@
             <label for="pegi_id" class="form-label">Classificação de Idade</label>
             <select name="pegi_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
                 <option selected value="">Selecione a Classificação de idade</option>
-                @foreach ($pegis as $val)
-                    <option value="{{ $val->id }}">{{ $val->name }}</option>
+                @foreach ($pegis as $pegi)
+                    <option value="{{ $pegi->id }}">{{ $pegi->name }}</option>
                 @endforeach
             </select>
         </div>
@@ -55,8 +55,8 @@
             <label for="genre_id" class="form-label">Genêro</label>
             <select name="genre_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
                 <option selected value="">Selecione um Genero</option>
-                @foreach ($genres as $val)
-                    <option value="{{ $val->id }}">{{ $val->name }}</option>
+                @foreach ($genres as $genre)
+                    <option value="{{ $genre->id }}">{{ $genre->name }}</option>
                 @endforeach
             </select>
         </div>

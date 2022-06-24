@@ -8,8 +8,6 @@ use App\Models\Rooms;
 use App\Models\Movies;
 use App\Models\Sessions;
 use App\Models\MoviesShown;
-use Illuminate\Http\Request;
-
 class SiteController extends Controller
 {
     /**
@@ -20,19 +18,9 @@ class SiteController extends Controller
     public function index()
     {
         $moviesShown = MoviesShown::get();
-        $movies = Movies::get();
-        $pegis = Pegi::get();
-        $genres = Genre::get();
-        $rooms = Rooms::get();
-        $sessions = Sessions::get();
         
         return view('mainpage.home',[
-            'moviesShown' => $moviesShown,
-            'movies' => $movies,
-            'pegis' => $pegis,
-            'genres' => $genres,
-            'rooms' => $rooms,
-            'sessions' => $sessions
+            'moviesShown' => $moviesShown
         ]);
     }
     /**
@@ -42,30 +30,12 @@ class SiteController extends Controller
      */
     public function showingMovies()
     {
-        $movies = Movies::get();
         $genres = Genre::get();
-        
-        $moviesShown = MoviesShown::select('movies_id')->where('session_date', '>=', date("Y-m-d"))->where('session_date', '<=', date('Y-m-d', strtotime('+10 days')))->distinct()->get();
+        $moviesShown = MoviesShown::get();
 
         return view('mainpage.movies',[
-            'movies' => $movies,
             'genres' => $genres,
             'moviesShown' => $moviesShown
-        ]);
-    }
-    /**
-     * Exibe filmes de um gênero especifico
-     *
-     * @param [type] $genre_id
-     * @return void
-     */
-    public function moviesPerGenre($genre_id)
-    {
-        $genre = Genre::find($genre_id);
-        $moviesPerGenre = Movies::select('*')->where('genre_id', $genre_id)->get();
-        return view('mainpage.movies-per-genre',[
-            'genre' => $genre,
-            'moviesPerGenre' => $moviesPerGenre
         ]);
     }
     /**
@@ -76,19 +46,10 @@ class SiteController extends Controller
      */
     public function movieDetails($id)
     {
-        $moviesShown = MoviesShown::where('movies_id', $id)->get();
-        $sessions = Sessions::get();
-        $rooms = Rooms::get();
-        $movie = Movies::findOrFail($id);
-        $genre = Genre::findOrFail($movie->genre_id);
-        $pegi = Pegi::findOrFail($movie->pegi_id);
+        $movie = Movies::find($id);
+
         return view('mainpage.details',[
-            'movie' => $movie,
-            'genre' => $genre,
-            'pegi' => $pegi,
-            'moviesShown' => $moviesShown,
-            'sessions' => $sessions,
-            'rooms' => $rooms
+            'movie' => $movie
         ]);
     }
 }

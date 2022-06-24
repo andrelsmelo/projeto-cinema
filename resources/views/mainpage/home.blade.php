@@ -31,76 +31,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($moviesShown as $val)
+                    @foreach ($moviesShown as $movieShown)
                         <tr>
                             <td>
-                                @foreach ($movies as $val2)
-                                    @if ($val->movies_id == $val2->id)
-                                        <a href="{{ route('movie-details', $val2->id) }}"><img src="{{ $val2->poster }}"
-                                                class="img-fluid w-25 rounded"></a>
-                                        {{ $val2->name }}
-                                        <p hidden>{{ $val2->tags }}</p>
-                                        @foreach ($genres as $val3)
-                                            @if ($val2->genre_id == $val3->id)
-                                                <p hidden>{{ $val3->name }}</p>
-                                            @endif
-                                        @endforeach
-                                        <p hidden>{{ $val->session_date }}</p>
+                                <a href="{{ route('movie-details', $movieShown->id) }}">
+                                    <img src="{{ $movieShown->movie->poster }}" class="img-fluid w-25 rounded">
+                                </a>
+                                <p hidden>{{ $movieShown->movie->tags }}</p>
+                                {{ $movieShown->movie->name }}
                             </td>
-                            @foreach ($pegis as $val3)
-                                @if ($val3->id == $val2->pegi_id)
-                                    <td class="text-center align-middle">
-                                        {{ $val3->name }}
-                                    </td>
-                                @endif
-                            @endforeach
-                    @endif
-                    @endforeach
-                    <td class="text-center align-middle">
-                        {{ date('d-m-Y', strtotime($val->session_date)) }}
-                    </td>
-                    @foreach ($sessions as $val2)
-                        @if ($val->sessions_id == $val2->id)
                             <td class="text-center align-middle">
-                                {{ $val2->session_hour }}
+                                <p hidden>{{ $movieShown->movie->pegi_id }}</p>
+                                {{ $movieShown->movie->pegi->name }}
                             </td>
-                        @endif
-                    @endforeach
-                    @foreach ($rooms as $val2)
-                        @if ($val->rooms_id == $val2->id)
                             <td class="text-center align-middle">
-                                {{ $val2->name }}
+                                {{ date('d-m-Y', strtotime($movieShown->session_date)) }}
                             </td>
-                        @endif
-                    @endforeach
-                    </tr>
+                            <td class="text-center align-middle">
+                                {{ $movieShown->session->session_hour }}
+                            </td>
+                            <td class="text-center align-middle">
+                                {{ $movieShown->room->name }}
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </section>
-    <script>
-        $(document).ready(function() {
-            var value = $("#input-date").val();
-            $("#myTable tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        })
-        $(document).ready(function() {
-            $("#input-date").on("change", function() {
-                var value = $(this).val().toLowerCase();
-                $("#myTable tbody tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-        $(document).ready(function() {
-            $("#input-text").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#myTable tbody tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
 @endsection

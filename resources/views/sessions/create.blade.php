@@ -29,8 +29,8 @@
                     <select name="rooms_id" id="salaSelected" class="form-select form-select-sm text-center"
                         aria-label=".form-select-sm example" required>
                         <option selected value="">Selecione uma Sala</option>
-                        @foreach ($rooms as $val)
-                            <option value="{{ $val->id }}">{{ $val->name }}</option>
+                        @foreach ($rooms as $room)
+                            <option value="{{ $room->id }}">{{ $room->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -39,8 +39,8 @@
                     <select name="sessions_id" class="form-select form-select-sm text-center"
                         aria-label=".form-select-sm example" required>
                         <option selected value="">Selecione um Horario</option>
-                        @foreach ($sessions as $val)
-                            <option value="{{ $val->id }}">{{ $val->session_hour }}</option>
+                        @foreach ($sessions as $session)
+                            <option value="{{ $session->id }}">{{ $session->session_hour }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -49,8 +49,8 @@
                     <select name="movies_id" class="form-select form-select-sm text-center"
                         aria-label=".form-select-sm example" required>
                         <option selected value="">Selecione um Filme</option>
-                        @foreach ($movies as $val)
-                            <option value="{{ $val->id }}">{{ $val->name }}</option>
+                        @foreach ($movies as $movie)
+                            <option value="{{ $movie->id }}">{{ $movie->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -74,29 +74,17 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($moviesShown as $val)
+                @foreach ($moviesShown as $moviesShown)
                     <tr>
-                        <th scope="row">{{ $val->id }}</th>
-                        <td>{{ $val->session_date }}</td>
-                        @foreach ($rooms as $val2)
-                            @if ($val->rooms_id == $val2->id)
-                                <td>{{ $val2->name }}</td>
-                            @endif
-                        @endforeach
-                        @foreach ($sessions as $val2)
-                            @if ($val->sessions_id == $val2->id)
-                                <td>{{ $val2->session_hour }}</td>
-                            @endif
-                        @endforeach
-                        @foreach ($movies as $val2)
-                            @if ($val->movies_id == $val2->id)
-                                <td>{{ $val2->name }}</td>
-                            @endif
-                        @endforeach
-                        <td>{{ $val->movie_duration }}</td>
+                        <th scope="row">{{ $moviesShown->id }}</th>
+                        <td>{{ $moviesShown->session_date }}</td>
+                                <td>{{ $moviesShown->room->name }}</td>
+                                <td>{{ $moviesShown->session->session_hour }}</td>
+                                <td>{{ $moviesShown->movie->name }}</td>
+                        <td>{{ $moviesShown->duration }}</td>
                         <td>
-                            <a href="{{ route('edit-session', $val->id) }}" class="btn btn-primary">Editar</a>
-                            <form action="{{ route('delete-session', $val->id) }}" method="POST"
+                            <a href="{{ route('edit-session', $moviesShown->id) }}" class="btn btn-primary">Editar</a>
+                            <form action="{{ route('delete-session', $moviesShown->id) }}" method="POST"
                                 style="display: inline;">
                                 @method('DELETE')
                                 @csrf
@@ -109,33 +97,4 @@
             </tbody>
         </table>
     </div>
-    <script>
-            $(document).ready(function() {
-            var value = $("#session_date").val();
-            $("#myTable tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        })
-        $(document).ready(function() {
-            $("#session_date").on("change", function() {
-                var value = $(this).val().toLowerCase();
-                $("#myTable tbody tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-        $(document).ready(function() {
-            $("#salaSelected").on("change", function() {
-                var value = $(this).val().toLowerCase();
-                console.log(value);
-                $("#myTable tbody tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-
-        var today = new Date().toISOString().split('T')[0];
-        document.getElementsByName("session_date")[0].setAttribute('min', today);
-        document.getElementsByName("session_date")[0].setAttribute('value', today);
-    </script>
 @endsection

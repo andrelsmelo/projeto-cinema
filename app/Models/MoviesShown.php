@@ -8,11 +8,26 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MoviesShown extends Model
 {
-    protected $fillable = ['session_date','rooms_id','sessions_id','movies_id','movie_duration','end_of_session'];
+    protected $fillable = ['session_date','room_id','session_id','movie_id','duration','end_of_session'];
     
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
 
     use HasFactory;
+
+    public function movie()
+    {
+        return $this->belongsTo(Movies::class,'movie_id');
+    }
+    
+    public function room()
+    {
+        return $this->hasOne(Rooms::class,'id', 'room_id');
+    }
+
+    public function session()
+    {
+        return $this->hasOne(Sessions::class,'id', 'session_id');
+    }
 }

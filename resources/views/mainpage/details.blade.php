@@ -21,11 +21,11 @@
             <ul class="list-unstyled align-middle mt-5">
                 <li>
                     <strong>Gênero: </strong>
-                    {{ $genre->name }}
+                    {{ $movie->genre->name }}
                 </li>
                 <li>
                     <strong>Classificação: </strong>
-                    {{ $pegi->name }}
+                    {{ $movie->pegi->name }}
                 </li>
                 <li>
                     <strong>Duração: </strong>
@@ -40,23 +40,12 @@
         <div class="col-5 text-center">
             <ul class="list-unstyled">
                 <h4>Sessões</h4>
-                @foreach ($moviesShown as $val)
-                    @if ($moviesShown->movies_id = $movie->id && $val->session_date >= date('Y-m-d') && $val->session_date <= date('Y-m-d', strtotime('+10 days')))
-                        <li>
-                            {{ $val->session_date }},
-                            @foreach ($sessions as $val2)
-                                @if ($val->sessions_id == $val2->id)
-                                    {{ $val2->session_hour }},
-                                @endif
-                            @endforeach
-                            @foreach ($rooms as $val2)
-                                @if ($val->rooms_id == $val2->id)
-                                    {{ $val2->name }}
-                                @endif
-                            @endforeach
+                @foreach($movie->movieShown as $movieSession)
+                       <li>
+                            {{ $movieSession->session_date }},
+                            {{ $movieSession->room->name }},
+                            {{ $movieSession->session->session_hour }}
                         </li>
-                    @else
-                    @endif
                 @endforeach
             </ul>
         </div>

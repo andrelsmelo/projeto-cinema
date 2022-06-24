@@ -6,7 +6,6 @@ use App\Models\Rooms;
 use App\Models\MoviesShown;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Redirect;
 
 class RoomController extends Controller
 {
@@ -53,7 +52,7 @@ class RoomController extends Controller
 
         Rooms::create($request->except('_token'));
 
-        return redirect('/salas'); 
+        return redirect('/rooms'); 
     }
     /**
      * Tela de edição de Sala
@@ -93,7 +92,7 @@ class RoomController extends Controller
 
         $room->update($request->except('_token'));
 
-        return redirect('/salas');
+        return redirect('/rooms');
     }
     /**
      * Deleta uma Sala no Banco de Dados
@@ -123,7 +122,7 @@ class RoomController extends Controller
 
         $room->delete();
 
-        return redirect('/salas'); 
+        return redirect('/rooms'); 
     }
 
 }

@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Rooms;
 use App\Models\Movies;
 use App\Models\Sessions;
-use Illuminate\Support\Arr;
 use App\Models\MoviesShown;
 use Illuminate\Http\Request;
+use App\Services\FormatterService;
 use Illuminate\Support\Facades\Gate;
+use App\Services\SessionRequestValidationService;
+use App\Services\SessionValidationService;
 
 class SessionController extends Controller
 {
@@ -22,11 +24,9 @@ class SessionController extends Controller
         Gate::authorize('access-admin');
 
         $movies = Movies::get();
-        $sessions = Sessions::get();
         $rooms = Rooms::get();
+        $sessions = Sessions::get();
         $moviesShown = MoviesShown::get();
-
-
 
         return view('sessions.create', [
             'movies' => $movies,
@@ -36,7 +36,7 @@ class SessionController extends Controller
         ]);
     }
     /**
-     * Salva a Sessão Nova no Banco de Dados
+     * Salva a Nova Sessão
      *
      * @param Request $request
      * @return void
@@ -45,59 +45,23 @@ class SessionController extends Controller
     {
         Gate::authorize('access-admin');
 
-        $request->validate([
-            "session_date" => ['required'],
-            "rooms_id" => ['required', 'exists:rooms,id'],
-            "sessions_id" => ['required', 'exists:sessions,id'],
-            "movies_id" => ['required', 'exists:movies,id']
-        ]);
+        //Valida os dados enviados na requisição
 
-        $data = $request->except('_token');
+        SessionRequestValidationService::validateRequest($request);
 
-        $duration = Movies::find($data['movies_id'])->only('duration');
+        //Formata a request com os detalhes da sessão
 
-        $newSessionHour = Sessions::find($data['sessions_id'])->only('session_hour');
-        $endOfSession = strtotime($newSessionHour['session_hour']) + strtotime($duration['duration']);
-        $secSessionHour = strtotime($newSessionHour['session_hour']) - strtotime('TODAY');
-        $secEndOfSession = strtotime($duration['duration']) - strtotime('TODAY');
-        $endOfSessionHour = gmdate("H:i:s", $secEndOfSession + $secSessionHour);
+        $newSession = FormatterService::formatRequest($request);
 
-        $data = Arr::add($data, 'movie_duration', Arr::get($duration, 'duration'));
-        $data = Arr::add($data, 'end_of_session', $endOfSessionHour);
+        //Valida se a sessão pode ser criada
 
-        $moviesShown = MoviesShown::get();
+        SessionValidationService::validateSession($newSession);
 
-        $sessions = $moviesShown->map(function ($moviesShown) {
-            return collect($moviesShown->toArray())
-                ->only(['session_date', 'rooms_id', 'sessions_id', 'end_of_session'])
-                ->all();
-        });
+        //Cria uma nova sessão
 
-        foreach ($sessions as $key => $value) {
+        MoviesShown::create($newSession);
 
-            $sessionsHour = Sessions::find($value['sessions_id'])->only('session_hour');
-            
-            if ($value['session_date'] == $data['session_date']
-            && $value['rooms_id'] == $data['rooms_id']
-            && $value['sessions_id'] == $data['sessions_id']) {
-                abort(400, 'Já existe uma sessão para esse horário');
-            } elseif($value['session_date'] == $data['session_date']
-            && $value['rooms_id'] == $data['rooms_id']
-            && $newSessionHour['session_hour'] > $sessionsHour['session_hour']
-            && $newSessionHour['session_hour'] < $value['end_of_session']){
-                abort(400, 'Existe uma sessão passando nesse horario');
-            } elseif($value['session_date'] == $data['session_date']
-            && $value['rooms_id'] == $data['rooms_id']
-            && $newSessionHour['session_hour'] < $sessionsHour['session_hour']
-            && $data['end_of_session'] > $sessionsHour['session_hour']
-            ) {
-                abort(400, 'O filme conflita com o da proxima sessão');
-            }
-        }
-
-        MoviesShown::create($data);
-
-        return redirect('/sessoes');
+        return redirect('/sessions');
     }
     /**
      * Tela de edição de Sessão
@@ -109,14 +73,14 @@ class SessionController extends Controller
     {
         Gate::authorize('access-admin');
 
-        $moviesShown = MoviesShown::find($id);
+        $movieShown = MoviesShown::find($id);
         $rooms = Rooms::get();
         $sessions = Sessions::get();
         $movies = Movies::get();
 
 
         return view('sessions.edit', [
-            'moviesShown' => $moviesShown,
+            'movieShown' => $movieShown,
             'rooms' => $rooms,
             'sessions' => $sessions,
             'movies' => $movies
@@ -133,53 +97,23 @@ class SessionController extends Controller
     {
         Gate::authorize('access-admin');
 
-        $request->validate([
-            "session_date" => [],
-            "rooms_id" => ['exists:rooms,id'],
-            "sessions_id" => ['exists:sessions,id'],
-            "movies_id" => ['exists:movies,id']
-        ]);
-        $moviesShown = MoviesShown::get();
+        //Valida os dados enviados na requisição
 
-        $sessions = $moviesShown->map(function ($moviesShown) {
-            return collect($moviesShown->toArray())
-                ->only(['session_date', 'rooms_id', 'sessions_id', 'movies_id', 'end_of_session'])
-                ->all();
-        });
-        $data = $request->except('_token');
-        $duration = Movies::find($data['movies_id'])->only('duration');
-        $newSessionHour = Sessions::find($data['sessions_id'])->only('session_hour');
-        $endOfSession = strtotime($newSessionHour['session_hour']) + strtotime($duration['duration']);
-        $secSessionHour = strtotime($newSessionHour['session_hour']) - strtotime('TODAY');
-        $secEndOfSession = strtotime($duration['duration']) - strtotime('TODAY');
-        $endOfSessionHour = gmdate("H:i:s", $secEndOfSession + $secSessionHour);
+        SessionRequestValidationService::validateRequest($request);
 
-        $data = Arr::add($data, 'movie_duration', Arr::get($duration, 'duration'));
-        $data = Arr::add($data, 'end_of_session', $endOfSessionHour);
+        //Formata a request com os detalhes da sessão
+        
+        $editedSession = FormatterService::formatRequest($request);
+        
+        //Valida se a sessão pode ser criada
+        
+        SessionValidationService::validateSession($editedSession);        
 
-        foreach ($sessions as $key => $value) {
+        $movieShown = MoviesShown::find($id);
 
-            $sessionsHour = Sessions::find($value['sessions_id'])->only('session_hour');
-            
-            if ($value['session_date'] == $data['session_date']
-            && $value['rooms_id'] == $data['rooms_id']
-            && $value['sessions_id'] == $data['sessions_id']) {
-                abort(400, 'Já existe uma sessão para esse horário');
-            } elseif($newSessionHour['session_hour'] > $sessionsHour['session_hour']
-            && $newSessionHour['session_hour'] < $value['end_of_session']){
-                abort(400, 'Existe uma sessão passando nesse horario');
-            } elseif($newSessionHour['session_hour'] < $sessionsHour['session_hour']
-            && $data['end_of_session'] > $sessionsHour['session_hour']) {
-                abort(400, 'O filme conflita com o da proxima sessão');
-            }
-        }
+        $movieShown->update($editedSession);
 
-        $moviesShown = MoviesShown::find($id);
-        $newdata = Arr::add($data, 'movie_duration', Arr::get($duration, 'duration'));
-
-        $moviesShown->update($newdata);
-
-        return redirect('/sessoes');
+        return redirect('/sessions');
     }
     /**
      * Deleta uma Sessão no Banco de Dados
@@ -191,10 +125,10 @@ class SessionController extends Controller
     {
         Gate::authorize('access-admin');
 
-        $moviesShown = MoviesShown::find($id);
+        $movieShown = MoviesShown::find($id);
 
-        $moviesShown->delete();
+        $movieShown->delete();
 
-        return redirect('/sessoes');
+        return redirect('/sessions');
     }
 }

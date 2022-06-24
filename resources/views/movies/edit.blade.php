@@ -56,8 +56,8 @@
         @if($val->id == $movie->genre_id)
         <select name="genre_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
             <option selected value="{{$val->id}}">{{$val->name}}</option>
-            @foreach ($genre as $val)
-            <option value="{{ $val->id }}">{{ $val->name }}</option>
+            @foreach ($genre as $genre)
+            <option value="{{ $genre->id }}">{{ $val->genre }}</option>
             @endforeach
         </select>
         @endif

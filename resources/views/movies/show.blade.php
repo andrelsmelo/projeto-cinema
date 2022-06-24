@@ -21,24 +21,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($movies as $val)
+                @foreach ($movies as $movie)
                     <tr>
-                        <th scope="row">{{ $val->id }}</th>
-                        <td>{{ $val->name }}</td>
-                        @foreach ($genres as $val2)
-                            @if ($val->genre_id == $val2->id)
-                                <td>{{ $val2->name }}</td>
-                            @endif
-                        @endforeach
-                        @foreach ($pegis as $val2)
-                            @if ($val->pegi_id == $val2->id)
-                                <td>{{ $val2->name }}</td>
-                            @endif
-                        @endforeach
-                        <td>{{ $val->release }}</td>
+                        <th scope="row">{{ $movie->id }}</th>
+                        <td>{{ $movie->name }}</td>
+                        <td>{{ $movie->genre->name }}</td>
+                        <td>{{ $movie->pegi->name }}</td>
+                        <td>{{ $movie->release }}</td>
                         <td>
-                            <a href="{{ route('edit-movie', $val->id) }}" class="btn btn-primary">Editar</button></a>
-                            <form action="{{ route('delete-movie', $val->id) }}" class="d-inline" method="POST">
+                            <a href="{{ route('edit-movie', $movie->id) }}" class="btn btn-primary">Editar</button></a>
+                            <form action="{{ route('delete-movie', $movie->id) }}" class="d-inline" method="POST">
                                 @method('DELETE')
                                 @csrf
                                 <button class="btn btn-danger" type="submit"

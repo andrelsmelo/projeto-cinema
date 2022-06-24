@@ -20,13 +20,10 @@ class MovieController extends Controller
     {
         Gate::authorize('access-admin');
 
-        $genres = Genre::get();
-        $pegis = Pegi::get();
         $movies = Movies::get();
+
         return view('movies.show',[
             'movies' => $movies,
-            'pegis' => $pegis,
-            'genres' => $genres
         ]);
     }
     /**
@@ -80,7 +77,7 @@ class MovieController extends Controller
             'tags' => $request->tags
         ]);
 
-        return redirect('/filmes');
+        return redirect('/movies');
 
     }
     /**
@@ -139,7 +136,7 @@ class MovieController extends Controller
             'tags' => $request->tags
         ]);
 
-        return redirect('/filmes');
+        return redirect('/movies');
     }
     /**
      * Deleta um filme do Banco De Dados
@@ -169,6 +166,6 @@ class MovieController extends Controller
 
         $movie->delete();
 
-        return redirect('/filmes');
+        return redirect('/movies');
     }
 }

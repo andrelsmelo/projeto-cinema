@@ -21,15 +21,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($rooms as $val)
+                @foreach ($rooms as $room)
                     <tr>
-                        <th scope="row">{{ $val->id }}</th>
-                        <td>{{ $val->name }}</td>
+                        <th scope="row">{{ $room->id }}</th>
+                        <td>{{ $room->name }}</td>
                         </td>
-                        <td>{{ $val->capacity }}</td>
+                        <td>{{ $room->capacity }}</td>
                         <td>
-                            <a href="{{ route('edit-room', $val->id) }}" class="btn btn-primary">Editar</a>
-                            <form action="{{ route('delete-room', $val->id) }}" method="POST" class="d-inline">
+                            <a href="{{ route('edit-room', $room->id) }}" class="btn btn-primary">Editar</a>
+                            <form action="{{ route('delete-room', $room->id) }}" method="POST" class="d-inline">
                                 @method('DELETE')
                                 @csrf
                                 <button class="btn btn-danger" type="submit"
