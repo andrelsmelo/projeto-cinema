@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Rooms;
 use App\Models\MoviesShown;
+use App\Services\NewRoomRequestValidationService;
+use App\Services\RoomAlreadyExistsValidationService;
+use App\Services\RoomNotInSessionValidationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -18,6 +21,7 @@ class RoomController extends Controller
     {
         Gate::authorize('access-admin');
 
+        //Resgata as salas existentes
         $rooms = Rooms::get();
 
         return view('rooms.show',[
@@ -25,7 +29,7 @@ class RoomController extends Controller
         ]);
     }
     /**
-     * Tela de criação de Sala
+     * Tela de criação de nova Sala
      *
      * @return void
      */
@@ -45,12 +49,17 @@ class RoomController extends Controller
     {
         Gate::authorize('access-admin');
 
-        $request->validate([
-            'name' => ['required', 'unique:rooms', 'max: 255'],
-            'capacity' => ['required']
-        ]);
+        //Valida se a request cumpre os campos requiridos
+        NewRoomRequestValidationService::validateNewRoomRequest($request);
 
-        Rooms::create($request->except('_token'));
+        //Atribui a request de nova sala a uma variavel
+        $newRoom = $request->except('_token');
+
+        //Valida se a sala já não existe
+        RoomAlreadyExistsValidationService::validateIfRoomAlreadyExists($newRoom);
+
+        //Cria a nova sala
+        Rooms::create($newRoom);
 
         return redirect('/rooms'); 
     }
@@ -64,6 +73,7 @@ class RoomController extends Controller
     {
         Gate::authorize('access-admin');
 
+        //Resgata a Sala especifica
         $room = Rooms::find($id);
 
         return view('rooms.edit',[
@@ -81,16 +91,20 @@ class RoomController extends Controller
     {
         Gate::authorize('access-admin');
 
-        $room = Rooms::findOrFail($id);
-        $rooms = Rooms::get();
+        //Valida se a request cumpre os campos requiridos
+        NewRoomRequestValidationService::validateNewRoomRequest($request);
+        
+        //Atribui a sala editada a uma variavel
+        $editedRoom = $request->except('_token');
 
-        foreach($rooms as $key => $value){
-            if($value['name'] == $request['name']){
-                abort(400, 'Já existe uma sala com esse nome');
-            }
-        }
+        //Atribui a sala original a uma variavel
+        $originalRoom = Rooms::findOrFail($id);
+       
+        //Valida se a Sala editada é a mesma que a original
+        RoomAlreadyExistsValidationService::validateIfEditedRoomIsSameAsOriginal($originalRoom, $editedRoom);
 
-        $room->update($request->except('_token'));
+        //Atualiza a sala original com os dados da Sala editada
+        $originalRoom->update($editedRoom);
 
         return redirect('/rooms');
     }
@@ -103,23 +117,14 @@ class RoomController extends Controller
     public function delete(int $id)
     {
         Gate::authorize('access-admin');
-
-        $moviesShown = MoviesShown::get();
         
-        $sessions = $moviesShown->map(function ($moviesShown) {
-            return collect($moviesShown->toArray())
-                ->only(['session_date', 'rooms_id', 'sessions_id', 'movies_id'])
-                ->all();
-        });
+        //Resgata a sala especifica
+        $room = Rooms::findOrFail($id);
 
-        foreach ($sessions as $key => $value) {
-            if ( $value['rooms_id'] == $id) {
-            abort(400, 'Não é possivel deletar uma sala que existe em uma sessão');
-            }
-        }
-        
-        $room = Rooms::find($id);
+        //Valida se a sala não existe em uma sessão
+        RoomNotInSessionValidationService::validateRoomNotInSession($room);
 
+        //Deleta a sala 
         $room->delete();
 
         return redirect('/rooms'); 

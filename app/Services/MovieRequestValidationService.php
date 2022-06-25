@@ -4,9 +4,15 @@ namespace App\Services;
 
 use Illuminate\Http\Request;
 
-class NewMovieRequestValidationService
+class MovieRequestValidationService
 {
-    public static function validateRequest(Request $request)
+    /**
+     * Valida se os campos requeridos estão preenchidos
+     *
+     * @param Request $request
+     * @return void
+     */
+    public static function validateMovieRequest(Request $request)
     {
         $request->validate([
             'name' => ['required', 'max: 255'],

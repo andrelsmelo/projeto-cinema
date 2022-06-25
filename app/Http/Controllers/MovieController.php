@@ -5,17 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Pegi;
 use App\Models\Genre;
 use App\Models\Movies;
+use App\Services\MovieAlreadyExistsValidationService;
 use App\Services\MovieNotInSessionValidationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Services\MovieRequestValidationService;
-use App\Services\NewMovieRequestValidationService;
-use App\Services\NewMovieValidationService;
 
 class MovieController extends Controller
 {
     /**
-     * Tela que mostra todos os filmes
+     * Mostra todos os filmes cadastrados
      *
      * @return void
      */
@@ -23,6 +22,7 @@ class MovieController extends Controller
     {
         Gate::authorize('access-admin');
 
+        //Resgata todos os filmes
         $movies = Movies::get();
 
         return view('movies.show',[
@@ -30,14 +30,15 @@ class MovieController extends Controller
         ]);
     }
     /**
-     * Tela de Criação de Filme Novo
+     * Tela de criação de novo Filme
      *
      * @return void
      */
     public function create()
     {
         Gate::authorize('access-admin');
-
+        
+        //Resgata os Generos e classificações existentes
         $genres = Genre::get();
         $pegis = Pegi::get();
 
@@ -47,7 +48,7 @@ class MovieController extends Controller
         ]);
     }
     /**
-     * Salva o Filme novo no Banco de Dados
+     * Salva o novo Filme
      *
      * @param Request $request
      * @return void
@@ -56,19 +57,22 @@ class MovieController extends Controller
     {
         Gate::authorize('access-admin');
 
-        NewMovieRequestValidationService::validateRequest($request);
+        //Valida se a request cumpre os campos requiridos
+        MovieRequestValidationService::validateMovieRequest($request);
 
+        //Atribui a request a uma variavel de novo filme
         $newMovie = $request->except('_token');
 
-        NewMovieValidationService::validateMovie($newMovie);
+        //Valida se o filme já não existe
+        MovieAlreadyExistsValidationService::validateIfMovieAlreadyExists($newMovie);
 
+        //Cria o filme
         Movies::create($newMovie);
 
         return redirect('/movies');
-
     }
     /**
-     * Tela de Edição de Filme
+     * Tela de Edição de um Filme especifico
      *
      * @param integer $id
      * @return void
@@ -76,10 +80,11 @@ class MovieController extends Controller
     public function edit(int $id)
     {
         Gate::authorize('access-admin');
-        
+
+        //Resgata o filme especifico, generos e classificações existentes
+        $movie = Movies::find($id);
         $genre = Genre::get();
         $pegi = Pegi::get();
-        $movie = Movies::find($id);
 
         return view('movies.edit',[
             'movie' => $movie,
@@ -88,7 +93,7 @@ class MovieController extends Controller
         ]);
     }
     /**
-     * Atualiza Filme no Banco de Dados
+     * Atualiza um filme especifico
      *
      * @param integer $id
      * @param Request $request
@@ -98,12 +103,19 @@ class MovieController extends Controller
     {
         Gate::authorize('access-admin');
         
-        NewMovieRequestValidationService::validateRequest($request);
+        //Valida se a request cumpre os campos requiridos
+        MovieRequestValidationService::validateMovieRequest($request);
 
+        //Atribui a request do filme editado a uma variavel
         $editedMovie = $request->except('_token');
 
+        //Resgata o filme original
         $originalMovie = Movies::findOrFail($id);
 
+        //Valida se o filme editado é o mesmo do filme original
+        MovieAlreadyExistsValidationService::validateIfEditedMovieIsSameAsOriginal($originalMovie, $editedMovie);
+        
+        //Atualiza o filme original com os dados do filme editado
         $originalMovie->update($editedMovie);
 
         return redirect('/movies');
@@ -118,10 +130,13 @@ class MovieController extends Controller
     {
         Gate::authorize('access-admin');
         
+        //Resgata o filme especifico
         $movie = Movies::findOrFail($id);
 
+        //Valida se o filme não existe em uma sessão
         MovieNotInSessionValidationService::validateMovieNotInSession($movie);
 
+        //Deleta o filme
         $movie->delete();
 
         return redirect('/movies');

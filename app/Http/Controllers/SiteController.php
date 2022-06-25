@@ -17,6 +17,7 @@ class SiteController extends Controller
      */
     public function index()
     {
+        //Resgata as sessões disponiveis
         $moviesShown = MoviesShown::get();
         
         return view('mainpage.home',[
@@ -30,7 +31,10 @@ class SiteController extends Controller
      */
     public function showingMovies()
     {
+        //Resgata os generos para filtragem
         $genres = Genre::get();
+
+        //Resgatas os filmes disponiveis
         $moviesShown = MoviesShown::get();
 
         return view('mainpage.movies',[
@@ -45,7 +49,8 @@ class SiteController extends Controller
      * @return void
      */
     public function movieDetails($id)
-    {
+    {   
+        //Resgata um filme especifico e seus detalhes
         $movie = Movies::find($id);
 
         return view('mainpage.details',[

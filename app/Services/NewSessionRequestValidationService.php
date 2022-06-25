@@ -6,7 +6,13 @@ use Illuminate\Http\Request;
 
 class NewSessionRequestValidationService
 {
-    public static function validateRequest(Request $request)
+    /**
+     * Valida se os campos requeridos estão preenchidos e sala, filme e horario existem
+     *
+     * @param Request $request
+     * @return void
+     */
+    public static function validateNewSessionRequest(Request $request)
     {
         $request->validate([
             "session_date" => ['required'],

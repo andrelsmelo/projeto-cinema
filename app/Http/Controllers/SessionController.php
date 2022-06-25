@@ -23,9 +23,12 @@ class SessionController extends Controller
     {
         Gate::authorize('access-admin');
 
+        //Resgata os filmes, salas e horarios de sessões disponiveis
         $movies = Movies::get();
         $rooms = Rooms::get();
         $sessions = Sessions::get();
+
+        //Resgata sessões existentes
         $moviesShown = MoviesShown::get();
 
         return view('sessions.create', [
@@ -46,20 +49,16 @@ class SessionController extends Controller
         Gate::authorize('access-admin');
 
         //Valida os dados enviados na requisição
+        NewSessionRequestValidationService::validateNewSessionRequest($request);
 
-        NewSessionRequestValidationService::validateRequest($request);
-
-        //Formata a request com os detalhes da sessão
-
-        $newSession = NewSessionFormatterService::formatRequest($request);
+        //Formata a request com os detalhes da sessão e a atribui a uma variavel
+        $newMovieShown = NewSessionFormatterService::formatRequest($request);
 
         //Valida se a sessão pode ser criada
-
-        NewSessionValidationService::validateSession($newSession);
+        NewSessionValidationService::validateSession($newMovieShown);
 
         //Cria uma nova sessão
-
-        MoviesShown::create($newSession);
+        MoviesShown::create($newMovieShown);
 
         return redirect('/sessions');
     }
@@ -73,11 +72,13 @@ class SessionController extends Controller
     {
         Gate::authorize('access-admin');
 
+        //Resgata dados da sessão especifica
         $movieShown = MoviesShown::find($id);
+
+        //Resgata salas, horarios de sessões e filmes disponiveis
         $rooms = Rooms::get();
         $sessions = Sessions::get();
         $movies = Movies::get();
-
 
         return view('sessions.edit', [
             'movieShown' => $movieShown,
@@ -87,7 +88,7 @@ class SessionController extends Controller
         ]);
     }
     /**
-     * Atualiza uma Sessão no Banco de Dados
+     * Atualiza uma Sessão
      *
      * @param integer $id
      * @param Request $request
@@ -97,23 +98,20 @@ class SessionController extends Controller
     {
         Gate::authorize('access-admin');
 
-        //Valida os dados enviados na requisição
-
-        NewSessionRequestValidationService::validateRequest($request);
+        //Valida se a request cumpre os campos requiridos
+        NewSessionRequestValidationService::validateNewSessionRequest($request);
 
         //Formata a request com os detalhes da sessão
-        
-        $editedSession = NewSessionFormatterService::formatRequest($request);
+        $editedMovieShown = NewSessionFormatterService::formatRequest($request);
         
         //Valida se a sessão pode ser criada
+        NewSessionValidationService::validateSession($editedMovieShown); 
         
-        NewSessionValidationService::validateSession($editedSession); 
-        
+        //Atribui a sessão original a uma variavel
+        $originalMovieShown = MoviesShown::find($id);
+
         //Atualiza a Sessão
-
-        $movieShown = MoviesShown::find($id);
-
-        $movieShown->update($editedSession);
+        $originalMovieShown->update($editedMovieShown);
 
         return redirect('/sessions');
     }
@@ -127,8 +125,10 @@ class SessionController extends Controller
     {
         Gate::authorize('access-admin');
 
+        //Retorna a sessão especifica
         $movieShown = MoviesShown::find($id);
 
+        //Deleta a sessão
         $movieShown->delete();
 
         return redirect('/sessions');

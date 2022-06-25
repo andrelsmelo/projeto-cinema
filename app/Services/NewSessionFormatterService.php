@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class NewSessionFormatterService
 {
+    /**
+     * Formata a requisição com os dados de horario inicial, duração e fim de sessão
+     *
+     * @param Request $request
+     * @return void
+     */
     public static function formatRequest(Request $request)
     {
         $movieDetails = Movies::find($request['movies_id']);
