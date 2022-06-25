@@ -7,10 +7,10 @@ use App\Models\Movies;
 use App\Models\Sessions;
 use App\Models\MoviesShown;
 use Illuminate\Http\Request;
-use App\Services\FormatterService;
 use Illuminate\Support\Facades\Gate;
-use App\Services\SessionRequestValidationService;
-use App\Services\SessionValidationService;
+use App\Services\NewSessionFormatterService;
+use App\Services\NewSessionValidationService;
+use App\Services\NewSessionRequestValidationService;
 
 class SessionController extends Controller
 {
@@ -47,15 +47,15 @@ class SessionController extends Controller
 
         //Valida os dados enviados na requisição
 
-        SessionRequestValidationService::validateRequest($request);
+        NewSessionRequestValidationService::validateRequest($request);
 
         //Formata a request com os detalhes da sessão
 
-        $newSession = FormatterService::formatRequest($request);
+        $newSession = NewSessionFormatterService::formatRequest($request);
 
         //Valida se a sessão pode ser criada
 
-        SessionValidationService::validateSession($newSession);
+        NewSessionValidationService::validateSession($newSession);
 
         //Cria uma nova sessão
 
@@ -99,15 +99,17 @@ class SessionController extends Controller
 
         //Valida os dados enviados na requisição
 
-        SessionRequestValidationService::validateRequest($request);
+        NewSessionRequestValidationService::validateRequest($request);
 
         //Formata a request com os detalhes da sessão
         
-        $editedSession = FormatterService::formatRequest($request);
+        $editedSession = NewSessionFormatterService::formatRequest($request);
         
         //Valida se a sessão pode ser criada
         
-        SessionValidationService::validateSession($editedSession);        
+        NewSessionValidationService::validateSession($editedSession); 
+        
+        //Atualiza a Sessão
 
         $movieShown = MoviesShown::find($id);
 
@@ -116,8 +118,8 @@ class SessionController extends Controller
         return redirect('/sessions');
     }
     /**
-     * Deleta uma Sessão no Banco de Dados
-     *
+     * Deleta uma Sessão
+     * 
      * @param integer $id
      * @return void
      */

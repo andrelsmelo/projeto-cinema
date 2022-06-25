@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Http\Request;
 
-class SessionRequestValidationService
+class NewSessionRequestValidationService
 {
     public static function validateRequest(Request $request)
     {

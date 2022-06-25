@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\MoviesShown;
 
-class SessionValidationService
+class NewSessionValidationService
 {
     public static function validateSession($newSession)
     {

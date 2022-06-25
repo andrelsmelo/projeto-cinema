@@ -6,7 +6,7 @@ use App\Models\Movies;
 use App\Models\Sessions;
 use Illuminate\Http\Request;
 
-class FormatterService
+class NewSessionFormatterService
 {
     public static function formatRequest(Request $request)
     {

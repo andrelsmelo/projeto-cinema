@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Pegi;
 use App\Models\Genre;
 use App\Models\Movies;
-use App\Models\MoviesShown;
+use App\Services\MovieNotInSessionValidationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Services\MovieRequestValidationService;
+use App\Services\NewMovieRequestValidationService;
+use App\Services\NewMovieValidationService;
 
 class MovieController extends Controller
 {
@@ -53,29 +56,13 @@ class MovieController extends Controller
     {
         Gate::authorize('access-admin');
 
-        $request->validate([
-            'name' => ['required', 'unique:movies', 'max: 255'],
-            'duration' => ['required','max: 255'],
-            'pegi_id' => ['required', 'exists:pegis,id'],
-            'poster' => ['required','max: 255'],
-            'trailer' => ['required','max: 255'],
-            'release' => ['required', 'max: 4'],
-            'genre_id' => ['required', 'exists:genres,id'],
-            'sinopse' => ['required'],  
-            'tags' => ['required','max: 255']
-        ]);
+        NewMovieRequestValidationService::validateRequest($request);
 
-        Movies::create([
-            'name' => $request->name,
-            'duration' => $request->duration,
-            'pegi_id' => $request->pegi_id,
-            'poster' => $request->poster,
-            'trailer' => $request->trailer,
-            'release' => $request->release,
-            'genre_id' => $request->genre_id,
-            'sinopse' => $request->sinopse,
-            'tags' => $request->tags
-        ]);
+        $newMovie = $request->except('_token');
+
+        NewMovieValidationService::validateMovie($newMovie);
+
+        Movies::create($newMovie);
 
         return redirect('/movies');
 
@@ -93,6 +80,7 @@ class MovieController extends Controller
         $genre = Genre::get();
         $pegi = Pegi::get();
         $movie = Movies::find($id);
+
         return view('movies.edit',[
             'movie' => $movie,
             'pegi' => $pegi,
@@ -110,31 +98,13 @@ class MovieController extends Controller
     {
         Gate::authorize('access-admin');
         
-        $request->validate([
-            'name' => ['required', 'max: 255'],
-            'duration' => ['required'],
-            'pegi_id' => ['required', 'exists:pegis,id'],
-            'poster' => ['required'],
-            'trailer' => ['required','max: 255'],
-            'release' => ['required', 'max: 4'],
-            'genre_id' => ['required', 'exists:genres,id'],
-            'sinopse' => ['required'],
-            'tags' => ['required','max: 255']
-        ]);
+        NewMovieRequestValidationService::validateRequest($request);
 
-        $movie = Movies::find($id);
+        $editedMovie = $request->except('_token');
 
-        $movie->update([
-            'name' => $request->name,
-            'duration' => $request->duration,
-            'pegi_id' => $request->pegi_id,
-            'poster' => $request->poster,
-            'trailer' => $request->trailer,
-            'release' => $request->release,
-            'genre_id' => $request->genre_id,
-            'sinopse' => $request->sinopse,
-            'tags' => $request->tags
-        ]);
+        $originalMovie = Movies::findOrFail($id);
+
+        $originalMovie->update($editedMovie);
 
         return redirect('/movies');
     }
@@ -147,22 +117,10 @@ class MovieController extends Controller
     public function delete(int $id)
     {
         Gate::authorize('access-admin');
-
-        $moviesShown = MoviesShown::get();
-        
-        $sessions = $moviesShown->map(function ($moviesShown) {
-            return collect($moviesShown->toArray())
-                ->only(['session_date', 'rooms_id', 'sessions_id', 'movies_id'])
-                ->all();
-        });
-
-        foreach ($sessions as $key => $value) {
-            if ( $value['movies_id'] == $id) {
-            abort(400, 'Não é possivel deletar um filme que existe em uma sessão');
-            }
-        }
         
         $movie = Movies::findOrFail($id);
+
+        MovieNotInSessionValidationService::validateMovieNotInSession($movie);
 
         $movie->delete();
 
