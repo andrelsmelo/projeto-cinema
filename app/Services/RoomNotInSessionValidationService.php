@@ -8,7 +8,6 @@ class RoomNotInSessionValidationService
 {
     public static function validateRoomNotInSession($room)
     {
-
         $moviesShown = MoviesShown::get();
         
         foreach ($moviesShown as $movieShown) {

@@ -6,26 +6,26 @@ use App\Models\Movies;
 use App\Models\Sessions;
 use Illuminate\Http\Request;
 
-class NewSessionFormatterService
+class SessionFormatterService
 {
     /**
-     * Formata a requisição com os dados de horario inicial, duração e fim de sessão
+     * Formata e retorna a requisição com os dados de horario inicial, duração e fim de sessão
      *
      * @param Request $request
      * @return void
      */
     public static function formatRequest(Request $request)
     {
+        //Resgata detalhes de filmes e horario
         $movieDetails = Movies::find($request['movies_id']);
         $sessionDetails = Sessions::find($request['sessions_id']);
 
         //Retorna o horario final da Sessão
-        
         $secSessionHour = strtotime($sessionDetails['session_hour']) - strtotime('TODAY');
         $secEndOfSession = strtotime($movieDetails['duration']) - strtotime('TODAY');
-
         $endOfSessionHour = gmdate("H:i:s", $secEndOfSession + $secSessionHour);
 
+        //Formata a request em uma variavel
         $newSession = [
             "session_date" => $request['session_date'],
             "room_id" => $request['rooms_id'],

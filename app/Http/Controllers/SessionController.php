@@ -8,9 +8,9 @@ use App\Models\Sessions;
 use App\Models\MoviesShown;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\Services\NewSessionFormatterService;
-use App\Services\NewSessionValidationService;
-use App\Services\NewSessionRequestValidationService;
+use App\Services\SessionFormatterService;
+use App\Services\SessionValidationService;
+use App\Services\SessionRequestValidationService;
 
 class SessionController extends Controller
 {
@@ -49,13 +49,13 @@ class SessionController extends Controller
         Gate::authorize('access-admin');
 
         //Valida os dados enviados na requisição
-        NewSessionRequestValidationService::validateNewSessionRequest($request);
+        SessionRequestValidationService::validateSessionRequest($request);
 
         //Formata a request com os detalhes da sessão e a atribui a uma variavel
-        $newMovieShown = NewSessionFormatterService::formatRequest($request);
+        $newMovieShown = SessionFormatterService::formatRequest($request);
 
         //Valida se a sessão pode ser criada
-        NewSessionValidationService::validateSession($newMovieShown);
+        SessionValidationService::validateSession($newMovieShown);
 
         //Cria uma nova sessão
         MoviesShown::create($newMovieShown);
@@ -99,13 +99,13 @@ class SessionController extends Controller
         Gate::authorize('access-admin');
 
         //Valida se a request cumpre os campos requiridos
-        NewSessionRequestValidationService::validateNewSessionRequest($request);
+        SessionRequestValidationService::validateSessionRequest($request);
 
         //Formata a request com os detalhes da sessão
-        $editedMovieShown = NewSessionFormatterService::formatRequest($request);
+        $editedMovieShown = SessionFormatterService::formatRequest($request);
         
         //Valida se a sessão pode ser criada
-        NewSessionValidationService::validateSession($editedMovieShown); 
+        SessionValidationService::validateSession($editedMovieShown); 
         
         //Atribui a sessão original a uma variavel
         $originalMovieShown = MoviesShown::find($id);

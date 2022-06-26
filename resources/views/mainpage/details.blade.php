@@ -14,7 +14,8 @@
         </div>
         <div class="col-4 d-flex flex-column m-auto">
             <div class="ratio ratio-16x9">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $movie->trailer }}" title="YouTube video player" frameborder="0"
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $movie->trailer }}"
+                    title="YouTube video player" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
             </div>
@@ -40,12 +41,12 @@
         <div class="col-5 text-center">
             <ul class="list-unstyled">
                 <h4>Sessões</h4>
-                @foreach($movie->movieShown as $movieSession)
-                       <li>
-                            {{ $movieSession->session_date }},
-                            {{ $movieSession->room->name }},
-                            {{ $movieSession->session->session_hour }}
-                        </li>
+                @foreach ($movie->movieShown as $movieSession)
+                    <li>
+                        {{ $movieSession->session_date }},
+                        {{ $movieSession->room->name }},
+                        {{ $movieSession->session->session_hour }}
+                    </li>
                 @endforeach
             </ul>
         </div>

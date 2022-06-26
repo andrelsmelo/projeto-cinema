@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Genres;
 use App\Models\Movies;
 use App\Models\Pegis;
-use App\Services\MovieAlreadyExistsValidationService;
-use App\Services\MovieNotInSessionValidationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Services\MovieRequestValidationService;
+use App\Services\MovieNotInSessionValidationService;
+use App\Services\MovieAlreadyExistsValidationService;
 
 class MovieController extends Controller
 {

@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Http\Request;
 
-class NewRoomRequestValidationService
+class RoomRequestValidationService
 {
     /**
      * Valida se os campos requeridos estão preenchidos
@@ -12,7 +12,7 @@ class NewRoomRequestValidationService
      * @param Request $request
      * @return void
      */
-    public static function validateNewRoomRequest(Request $request)
+    public static function validateRoomRequest(Request $request)
     {
         $request->validate([
             'name' => ['required', 'max: 255'],

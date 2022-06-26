@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\MoviesShown;
 
-class NewSessionValidationService
+class SessionValidationService
 {
     /**
      * Valida se a sessão não conflita com nenhuma outra sessão existente

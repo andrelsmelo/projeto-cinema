@@ -14,8 +14,9 @@ class MovieAlreadyExistsValidationService
      */
     public static function validateIfMovieAlreadyExists($newMovie)
     {
+        //Retorna todos os filmes disponiveis
         $movies = Movies::get();
-            
+
         foreach($movies as $movie) {
             if ($movie->name == $newMovie['name']) {
                 abort(400, 'Esse filme já existe');
@@ -31,7 +32,7 @@ class MovieAlreadyExistsValidationService
      * @return void
      */
     public static function validateIfEditedMovieIsSameAsOriginal($originalMovie, $editedMovie)
-    {        
+    {   
         if ($editedMovie['name'] != $originalMovie->name) {
             abort(400, 'Você não está editando o filme Original');
         }

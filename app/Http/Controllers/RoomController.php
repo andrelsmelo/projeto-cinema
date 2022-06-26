@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rooms;
-use App\Services\NewRoomRequestValidationService;
-use App\Services\RoomAlreadyExistsValidationService;
-use App\Services\RoomNotInSessionValidationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Services\RoomRequestValidationService;
+use App\Services\RoomNotInSessionValidationService;
+use App\Services\RoomAlreadyExistsValidationService;
 
 class RoomController extends Controller
 {
@@ -49,7 +49,7 @@ class RoomController extends Controller
         Gate::authorize('access-admin');
 
         //Valida se a request cumpre os campos requiridos
-        NewRoomRequestValidationService::validateNewRoomRequest($request);
+        RoomRequestValidationService::validateRoomRequest($request);
 
         //Atribui a request de nova sala a uma variavel
         $newRoom = $request->except('_token');
@@ -91,7 +91,7 @@ class RoomController extends Controller
         Gate::authorize('access-admin');
 
         //Valida se a request cumpre os campos requiridos
-        NewRoomRequestValidationService::validateNewRoomRequest($request);
+        RoomRequestValidationService::validateRoomRequest($request);
         
         //Atribui a sala editada a uma variavel
         $editedRoom = $request->except('_token');
