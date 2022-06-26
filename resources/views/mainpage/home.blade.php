@@ -9,7 +9,7 @@
             <div class="col-4 d-block">
                 <label for="session_date" class="form-label">Data</label>
                 <input type="date" class="form-control text-center" id="input-date" name="input-date"
-                    placeholder="Digite a data da Sessão" required>
+                    value="{{ date('Y-m-d') }}" placeholder="Digite a data da Sessão" required>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -45,6 +45,7 @@
                                 {{ $movieShown->movie->pegi->name }}
                             </td>
                             <td class="text-center align-middle">
+                                <p hidden> {{ date('Y-m-d', strtotime($movieShown->session_date)) }}</p>
                                 {{ date('d-m-Y', strtotime($movieShown->session_date)) }}
                             </td>
                             <td class="text-center align-middle">

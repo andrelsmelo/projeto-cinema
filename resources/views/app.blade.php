@@ -11,6 +11,7 @@
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/js/app.js"></script>
 </head>
 
 <body class="bg-dark text-light">
@@ -76,19 +77,7 @@
     </main>
 
     <footer>
-
+        
     </footer>
 </body>
-<script>
-    var today = new Date();
-    var min = new Date().toISOString().split('T')[0];
-    var maxDate = new Date(today.getTime() + 10 * 24 * 60 * 60 * 1000);
-    var max = maxDate.toISOString().split('T')[0];
-    today.setDate(today.getDate() - 5);
-    var minDate = today.toISOString().split('T')[0]
-    document.getElementsByName("input-date")[0].setAttribute('min', minDate);
-    document.getElementsByName("input-date")[0].setAttribute('value', min);
-    document.getElementsByName("input-date")[0].setAttribute('max', max);
-</script>
-
 </html>

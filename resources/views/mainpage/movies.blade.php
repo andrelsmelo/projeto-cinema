@@ -28,9 +28,11 @@
             <div class="col" style="display: inline">
                 @foreach ($moviesShown as $movieShown)
                     <a href="{{ route('movie-details', $movieShown->movie_id) }}"><img
-                            src="{{ $movieShown->movie->poster }}" class="img-fluid m-2 rounded" style="width: 20%"></a>
+                            src="{{ $movieShown->movie->poster }}" class="img-fluid m-2 rounded" style="width: 20%">
                     <p hidden>{{ $movieShown->movie->tags }}</p>
+                    <span hidden>{{ $movieShown->movie->genre->name }}</span>
                     <span hidden>{{ $movieShown->movie->name }}</span>
+                </a>
                 @endforeach
             </div>
         </div>
