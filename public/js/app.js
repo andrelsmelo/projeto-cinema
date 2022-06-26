@@ -7,19 +7,22 @@
   \*****************************/
 /***/ (() => {
 
-var dateElementExists = document.getElementsByName("input-date");
+$(document).ready(function () {
+  var dateElementExists = document.getElementById("input-date");
 
-if (!dateElementExists) {
-  var todayDate = new Date();
-  var mainPageMinSettedDate = new Date().toISOString().split('T')[0];
-  var maxDate = new Date(todayDate.getTime() + 10 * 24 * 60 * 60 * 1000);
-  var mainPageMaxSettedDate = maxDate.toISOString().split('T')[0];
-  todayDate.setDate(todayDate.getDate() - 5);
-  var mainPageMinSettedDate = todayDate.toISOString().split('T')[0];
-  document.getElementsByName("input-date")[0].setAttribute('min', mainPageMinSettedDate);
-  document.getElementsByName("input-date")[0].setAttribute('max', mainPageMaxSettedDate);
-}
+  if (!!dateElementExists) {
+    var todayDate = new Date();
+    var mainPageMinSettedDate = new Date().toISOString().split('T')[0];
+    var maxDate = new Date(todayDate.getTime() + 10 * 24 * 60 * 60 * 1000);
+    var mainPageMaxSettedDate = maxDate.toISOString().split('T')[0];
+    todayDate.setDate(todayDate.getDate() - 5);
+    var mainPageMinSettedDate = todayDate.toISOString().split('T')[0];
+    document.getElementById("input-date").setAttribute('min', mainPageMinSettedDate);
+    document.getElementById("input-date").setAttribute('max', mainPageMaxSettedDate);
+  }
 
+  ;
+});
 $(document).ready(function () {
   $("#input-text").on("keyup", function () {
     var value = $(this).val().toLowerCase();

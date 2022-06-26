@@ -41,7 +41,7 @@
         <div class="col-5 text-center">
             <ul class="list-unstyled">
                 <h4>Sessões</h4>
-                @foreach ($movie->movieShown as $movieSession)
+                @foreach ($movie->moviesShown as $movieSession)
                     <li>
                         {{ $movieSession->session_date }},
                         {{ $movieSession->room->name }},

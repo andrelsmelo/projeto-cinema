@@ -21,8 +21,8 @@
                 @csrf
                 <div>
                     <label for="session_date" class="form-label">Data</label>
-                    <input type="date" class="form-control text-center" id="session_date" name="session_date"
-                        placeholder="Digite a data da Sessão" required>
+                    <input type="date" class="form-control text-center" id="input-date" name="input-date"
+                    value="{{ date('Y-m-d') }}" placeholder="Digite a data da Sessão" required>
                 </div>
                 <div class="mt-3">
                     <label for="rooms_id" class="form-label">Sala</label>
