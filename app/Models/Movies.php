@@ -16,18 +16,19 @@ class Movies extends Model
 
     use HasFactory;
 
-    public function movieShown()
+    //Define relações de filme com sessões
+    public function moviesShown()
     {
         return $this->hasMany(MoviesShown::class,'movie_id');
     }
-
+    //Define relações de filme com classificações
     public function pegi()
     {
-        return $this->hasOne(Pegi::class,'id', 'pegi_id');
+        return $this->hasOne(Pegis::class,'id', 'pegi_id');
     }
-
+    //Define relações de filme com generos
     public function genre()
     {
-        return $this->hasOne(Genre::class,'id', 'genre_id');
+        return $this->hasOne(Genres::class,'id', 'genre_id');
     }
 }

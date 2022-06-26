@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rooms;
-use App\Models\MoviesShown;
 use App\Services\NewRoomRequestValidationService;
 use App\Services\RoomAlreadyExistsValidationService;
 use App\Services\RoomNotInSessionValidationService;

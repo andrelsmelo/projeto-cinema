@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pegi;
-use App\Models\Genre;
+use App\Models\Genres;
 use App\Models\Movies;
+use App\Models\Pegis;
 use App\Services\MovieAlreadyExistsValidationService;
 use App\Services\MovieNotInSessionValidationService;
 use Illuminate\Http\Request;
@@ -39,8 +39,8 @@ class MovieController extends Controller
         Gate::authorize('access-admin');
         
         //Resgata os Generos e classificações existentes
-        $genres = Genre::get();
-        $pegis = Pegi::get();
+        $genres = Genres::get();
+        $pegis = Pegis::get();
 
         return view('movies.create',[
             'pegis' => $pegis,
@@ -83,8 +83,8 @@ class MovieController extends Controller
 
         //Resgata o filme especifico, generos e classificações existentes
         $movie = Movies::find($id);
-        $genre = Genre::get();
-        $pegi = Pegi::get();
+        $genre = Genres::get();
+        $pegi = Pegis::get();
 
         return view('movies.edit',[
             'movie' => $movie,

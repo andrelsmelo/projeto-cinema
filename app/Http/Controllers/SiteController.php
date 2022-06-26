@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pegi;
-use App\Models\Genre;
-use App\Models\Rooms;
+use App\Models\Genres;
 use App\Models\Movies;
-use App\Models\Sessions;
 use App\Models\MoviesShown;
 class SiteController extends Controller
 {
@@ -32,7 +29,7 @@ class SiteController extends Controller
     public function showingMovies()
     {
         //Resgata os generos para filtragem
-        $genres = Genre::get();
+        $genres = Genres::get();
 
         //Resgatas os filmes disponiveis
         $moviesShown = MoviesShown::get();

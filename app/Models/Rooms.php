@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Rooms extends Model
 {
@@ -15,4 +15,10 @@ class Rooms extends Model
     protected $dates = ['deleted_at'];
     
     use HasFactory;
+
+    //Define relação de salas com sessões
+    public function moviesShown()
+    {
+        return $this->belongsTo(MoviesShown::class);
+    }
 }

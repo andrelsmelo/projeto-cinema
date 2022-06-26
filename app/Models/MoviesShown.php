@@ -16,16 +16,17 @@ class MoviesShown extends Model
 
     use HasFactory;
 
+    //Define relação de sessões com filmes
     public function movie()
     {
         return $this->belongsTo(Movies::class,'movie_id');
     }
-    
+    //Define relação de sessões com salas
     public function room()
     {
         return $this->hasOne(Rooms::class,'id', 'room_id');
     }
-
+    //Define relação de sessões com horarios
     public function session()
     {
         return $this->hasOne(Sessions::class,'id', 'session_id');

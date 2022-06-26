@@ -15,13 +15,13 @@ class DatabaseSeeder extends Seeder
     {
     
         //Insere Genêros dos filmes na tabela de genres
-        $this->call(GenreSeeder::class);
+        $this->call(GenresSeeder::class);
         //Insere Classificações de Idade na tabela de pegis
-        $this->call(PegiSeeder::class);
+        $this->call(PegisSeeder::class);
         //Insere Horarios fixados de sessões tabela de sessions
         $this->call(SessionsSeeder::class);
         //Insere Salas na tabela de Rooms
-        $this->call(RoomSeeder::class);
+        $this->call(RoomsSeeder::class);
         //Insere filmes na tabela de Movies
         $this->call(MoviesSeeder::class);
         //Insere usuario base Admin
