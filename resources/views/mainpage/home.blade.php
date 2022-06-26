@@ -34,7 +34,7 @@
                     @foreach ($moviesShown as $movieShown)
                         <tr>
                             <td>
-                                <a href="{{ route('movie-details', $movieShown->id) }}">
+                                <a href="{{ route('movie-details', $movieShown->movie->id) }}">
                                     <img src="{{ $movieShown->movie->poster }}" class="img-fluid w-25 rounded">
                                 </a>
                                 <p hidden>{{ $movieShown->movie->tags }}</p>

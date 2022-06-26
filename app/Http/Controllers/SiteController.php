@@ -33,10 +33,12 @@ class SiteController extends Controller
 
         //Resgatas os filmes disponiveis
         $moviesShown = MoviesShown::get();
+        $movies = Movies::get();
 
         return view('mainpage.movies',[
             'genres' => $genres,
-            'moviesShown' => $moviesShown
+            'moviesShown' => $moviesShown,
+            'movies' => $movies
         ]);
     }
     /**
