@@ -12,6 +12,6 @@ class Pegis extends Model
     //Define relação de classificações com Filmes
     public function movies()
     {
-        return $this->belongsTo(Movies::class);
+        return $this->hasMany(Movies::class, 'pegi_id');
     }
 }

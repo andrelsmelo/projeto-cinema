@@ -19,7 +19,7 @@ class MoviesShown extends Model
     //Define relação de sessões com filmes
     public function movie()
     {
-        return $this->belongsTo(Movies::class,'movie_id');
+        return $this->hasOne(Movies::class,'id','movie_id');
     }
     //Define relação de sessões com salas
     public function room()

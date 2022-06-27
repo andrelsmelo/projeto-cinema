@@ -22,7 +22,7 @@ class SiteController extends Controller
         ]);
     }
     /**
-     * Exibe tela de todos os filmes disponiveis no cinema com lsita lateral de gêneros
+     * Exibe tela de todos os filmes disponiveis no cinema com lista lateral de gêneros
      *
      * @return void
      */

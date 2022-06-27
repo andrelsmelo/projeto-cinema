@@ -19,6 +19,6 @@ class Rooms extends Model
     //Define relação de salas com sessões
     public function moviesShown()
     {
-        return $this->belongsTo(MoviesShown::class);
+        return $this->hasMany(MoviesShown::class, 'room_id');
     }
 }
