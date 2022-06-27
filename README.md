@@ -26,7 +26,7 @@ Para rodar esse projeto, você vai precisar criar um schema com o nome que achar
 Clone o repositorio
 
 ```bash
-  git clone https://link-para-o-projeto
+  git clone https://github.com/andrelsmelo/projeto-cinema
 ```
 
 A seguir instale as dependencias
