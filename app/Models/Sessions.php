@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Sessions extends Model
 {
+    protected $fillable = ['session_hour'];
+
     use HasFactory;
 
     //Define relação de horarios com sessões

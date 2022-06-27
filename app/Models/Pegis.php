@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pegis extends Model
 {
+    protected $fillable = ['name'];
+    
     use HasFactory;
 
     //Define relação de classificações com Filmes
