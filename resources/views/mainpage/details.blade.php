@@ -42,11 +42,13 @@
             <ul class="list-unstyled">
                 <h4>Sessões</h4>
                 @foreach ($movie->moviesShown as $movieSession)
+                @if($movieSession->session_date >= date('Y-m-d'))
                     <li>
                         {{ $movieSession->session_date }},
                         {{ $movieSession->room->name }},
                         {{ $movieSession->session->session_hour }}
                     </li>
+                @endif
                 @endforeach
             </ul>
         </div>
